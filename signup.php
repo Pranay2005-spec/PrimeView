@@ -1,12 +1,55 @@
+<?php
+include "database.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    // GET VALUES FROM FORM (match names correctly)
+    $username = $_POST['name'];
+    $email = $_POST['signupEmail'];
+    $password = $_POST['signupPassword'];
+    $confirmPassword = $_POST['confirmPassword'];
+
+    // Check password match
+    if ($password !== $confirmPassword) {
+        echo "<script>alert('Passwords do not match'); window.location='signup.php';</script>";
+        exit();
+    }
+
+    // Hash password
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Check if email already exists
+    $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $check->bind_param("s", $email);
+    $check->execute();
+    $checkResult = $check->get_result();
+
+    if ($checkResult->num_rows > 0) {
+        echo "<script>alert('Email already registered'); window.location='signup.php';</script>";
+        exit();
+    }
+
+    // INSERT USER SAFELY
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $username, $email, $hashedPassword);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Registration Successful! Please login.'); window.location='login.php';</script>";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Aura.stream</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - Aura.stream</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+  
   <style>
     body {
       background-color: hsla(0, 0%, 7%, 0.822);
@@ -90,8 +133,7 @@
   border-radius: 6px;
 }
 
-
-    .login-container {
+    .signup-container {
       background: rgba(20, 20, 20, 0.9);
       padding: 40px 30px;
       border-radius: 12px;
@@ -101,7 +143,7 @@
       color: #fff;
     }
 
-    .login-heading {
+    .signup-heading {
       text-align: center;
       font-size: 2rem;
       font-weight: bold;
@@ -114,6 +156,7 @@
       color: #fff;
       border: 1px solid #333;
     }
+
     .form-control:focus {
       background: #222;
       color: #fff;
@@ -130,6 +173,7 @@
       transition: 0.3s;
       width: 100%;
     }
+
     .btn-login:hover {
       background: #ff3333;
     }
@@ -139,20 +183,21 @@
       font-size: 0.9rem;
       text-align: center;
     }
+
     .login-options a {
       color: #e50914;
       text-decoration: none;
     }
+
     .login-options a:hover {
       text-decoration: underline;
     }
 
-    /* 📱 Mobile */
     @media (max-width: 480px) {
-      .login-container {
+      .signup-container {
         padding: 30px 20px;
       }
-      .login-heading {
+      .signup-heading {
         font-size: 1.6rem;
       }
     }
@@ -168,46 +213,54 @@
     </a>
   </div>
   <ul class="nav-links">
-    <li><a href="index.html"><i class="bi bi-house-door"></i> <span>Home</span></a></li>
+    <li><a href="index.php"><i class="bi bi-house-door"></i> <span>Home</span></a></li>
     <li><a href="search.html"><i class="bi bi-search"></i> <span>Search</span></a></li>
     <li><a href="contact.html"><i class="bi bi-telephone"></i> <span>contact us</span></a></li>
-    <li><a href="login.html"><i class="bi bi-person"></i> <span>login</span></a></li>
+    <li><a href="login.php"><i class="bi bi-person"></i> <span>login</span></a></li>
   </ul>
 </nav>
 
-
-  <div class="login-container">
-    <h2 class="login-heading">Login</h2>
-    <form>
+  <!-- Signup Form -->
+  <div class="signup-container">
+    <h2 class="signup-heading">Sign Up</h2>
+    <form action="signup.php" method="post">
       <div class="mb-3">
-        <label for="email" class="form-label">Email Address</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name">
       </div>
 
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Enter your password">
+        <label for="signupEmail" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="signupEmail" name="signupEmail" placeholder="Enter your email">
       </div>
 
-      <button type="submit" class="btn-login">Login</button>
+      <div class="mb-3">
+        <label for="signupPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="signupPassword" name="signupPassword" placeholder="Create a password">
+      </div>
+
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Repeat your password">
+      </div>
+
+      <button type="submit" class="btn-login">Sign Up</button>
     </form>
 
     <div class="login-options">
-      <p><a href="#">Forgot Password?</a></p>
-      <p>Don’t have an account? <a href="signup.html">Sign Up</a></p>
-      <p>Admin  <a href="admin.html">Sign Up</a></p>
+      <p>Already have an account? <a href="login.php">Login</a></p>
     </div>
   </div>
-
-  
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('.login-container form');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
+    const form = document.querySelector('.signup-container form');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('signupEmail');
+    const passwordInput = document.getElementById('signupPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
 
     function showError(input, message) {
       clearError(input);
@@ -230,12 +283,18 @@
     }
 
     form.addEventListener('submit', function (e) {
-      e.preventDefault(); // Stop default submit for validation
       let valid = true;
 
-      clearError(emailInput);
-      clearError(passwordInput);
+      // Clear previous errors
+      [nameInput, emailInput, passwordInput, confirmPasswordInput].forEach(clearError);
 
+      // Full Name
+      if (nameInput.value.trim() === '') {
+        showError(nameInput, 'Full name is required.');
+        valid = false;
+      }
+
+      // Email
       if (emailInput.value.trim() === '') {
         showError(emailInput, 'Email is required.');
         valid = false;
@@ -244,29 +303,25 @@
         valid = false;
       }
 
-      if (passwordInput.value.trim() === '') {
-        showError(passwordInput, 'Password is required.');
+      // Password
+      if (passwordInput.value.length < 6) {
+        showError(passwordInput, 'Password must be at least 6 characters.');
         valid = false;
       }
 
-      
-      if (valid) {
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
+      // Confirm Password
+      if (confirmPasswordInput.value !== passwordInput.value) {
+        showError(confirmPasswordInput, 'Passwords do not match.');
+        valid = false;
+      }
 
-        // Set your correct login credentials here
-        const correctEmail = "admin@gmail.com";
-        const correctPassword = "123456";
-
-        if (email === correctEmail && password === correctPassword) {
-          // Redirect to index.html
-          window.location.href = "index.html";
-        } else {
-          alert("Invalid email or password. Please try again.");
-        }
+      if (!valid) {
+        e.preventDefault(); // Stop form submission
       }
     });
   });
 </script>
 </body>
 </html>
+
+

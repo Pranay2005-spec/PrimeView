@@ -394,7 +394,7 @@
     <li><a href="index.html"><i class="bi bi-house-door"></i> <span>Home</span></a></li>
     <li><a href="search.html"><i class="bi bi-search"></i> <span>Search</span></a></li>
     <li><a href="contact.html"><i class="bi bi-telephone"></i> <span>contact us</span></a></li>
-    <li><a href="login.html"><i class="bi bi-person"></i> <span>login</span></a></li>
+    <li><a href="login.php"><i class="bi bi-person"></i> <span>login</span></a></li>
   </ul>
 </nav>
 
