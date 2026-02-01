@@ -386,12 +386,12 @@
 <!-- Sidebar Navbar -->
 <nav class="sidebar">
   <div class="logo">
-    <a href="login.html">
+    <a href="login.php">
     <img src="Geometric Blue _A_ Logo Design.png"  alt="Logo">
     </a>
   </div>
   <ul class="nav-links">
-    <li><a href="index.html"><i class="bi bi-house-door"></i> <span>Home</span></a></li>
+    <li><a href="index.php"><i class="bi bi-house-door"></i> <span>Home</span></a></li>
     <li><a href="search.html"><i class="bi bi-search"></i> <span>Search</span></a></li>
     <li><a href="contact.html"><i class="bi bi-telephone"></i> <span>contact us</span></a></li>
     <li><a href="login.php"><i class="bi bi-person"></i> <span>login</span></a></li>
@@ -424,7 +424,7 @@
   <div class="carousel-inner">
 
     <!-- Slide 1 -->
-    <div class="carousel-item active" style="background-image: url('memory.jpg'); background-size: cover; background-position: center;">
+    <div class="carousel-item active" style="background-image: url('Thumbnails/memory.jpg'); background-size: cover; background-position: center;">
       <div class="dark-gradient"></div>
       <div class="carousel-overlay">
         <h2 class="carousel-title mb-2">Memories of Murder</h2>
@@ -434,7 +434,7 @@
     </div>
 
     <!-- Slide 2 -->
-    <div class="carousel-item" style="background-image: url('fightclub.jpg'); background-size: cover; background-position: center;">
+    <div class="carousel-item" style="background-image: url('Thumbnails/fightclub.jpg'); background-size: cover; background-position: center;">
       <div class="dark-gradient"></div>
       <div class="carousel-overlay">
         <h2 class="carousel-title mb-2">Fight Club</h2>
@@ -444,7 +444,7 @@
     </div>
 
     <!-- Slide 3 -->
-    <div class="carousel-item" style="background-image: url('anayam.jpg'); background-size: cover; background-position: center;">
+    <div class="carousel-item" style="background-image: url('Thumbnails/anayam.jpg'); background-size: cover; background-position: center;">
       <div class="dark-gradient"></div>
       <div class="carousel-overlay">
         <h2 class="carousel-title mb-2">Anayam Rasoolam</h2>
@@ -474,7 +474,7 @@
     <div class="col-6 col-md-2">
       <a href="genere.html" class="genre-link">
         <div class="genre-card">
-          <img src="action.jpg" alt="Action" class="genre-img">
+          <img src="Thumbnails/action.jpg" alt="Action" class="genre-img">
           <div class="genre-label">Action</div>
         </div>
       </a>
@@ -483,7 +483,7 @@
     <div class="col-6 col-md-2">
       <a href="genere.html" class="genre-link">
         <div class="genre-card">
-          <img src="adventure.webp" alt="Adventure" class="genre-img">
+          <img src="Thumbnails/adventure.webp" alt="Adventure" class="genre-img">
           <div class="genre-label">Adventure</div>
         </div>
       </a>
@@ -492,7 +492,7 @@
     <div class="col-6 col-md-2">
       <a href="genere.html" class="genre-link">
         <div class="genre-card">
-          <img src="comedy.jpg" alt="Comedy" class="genre-img">
+          <img src="Thumbnails/comedy.jpg" alt="Comedy" class="genre-img">
           <div class="genre-label">Comedy</div>
         </div>
       </a>
@@ -501,7 +501,7 @@
     <div class="col-6 col-md-2">
       <a href="genere.html" class="genre-link">
         <div class="genre-card">
-          <img src="sci-fi.jpg" alt="sci-fi" class="genre-img">
+          <img src="Thumbnails/sci-fi.jpg" alt="sci-fi" class="genre-img">
           <div class="genre-label">sci-fi</div>
         </div>
       </a>
@@ -511,7 +511,7 @@
     <div class="col-6 col-md-2">
       <a href="genere.html" class="genre-link">
         <div class="genre-card">
-          <img src="romcom.webp" alt="Rom-com" class="genre-img">
+          <img src="Thumbnails/romcom.webp" alt="Rom-com" class="genre-img">
           <div class="genre-label">Rom-Com</div>
         </div>
       </a>
@@ -520,7 +520,7 @@
     <div class="col-6 col-md-2">
       <a href="genere.html" class="genre-link">
         <div class="genre-card">
-          <img src="psycho.jpg" alt="Drama" class="genre-img">
+          <img src="Thumbnails/psycho.jpg" alt="Drama" class="genre-img">
           <div class="genre-label">Psychological</div>
         </div>
       </a>
@@ -562,7 +562,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="shawshank.jpg" alt="shawshank redemption">
+            <img src="Thumbnails/shawshank.jpg" alt="shawshank redemption">
             <div class="anime-overlay"><p>2h 30min</p></div>
           </div>
           <h5 class="anime-title">The shawshank redemption</h5>
@@ -574,7 +574,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="the godfather.png" alt="godfather">
+            <img src="Thumbnails/the godfather.png" alt="godfather">
             <div class="anime-overlay"><p>2h 30min</p></div>
           </div>
           <h5 class="anime-title">The Godfather</h5>
@@ -586,7 +586,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="dark knight.jpg" alt="dark knight">
+            <img src="Thumbnails/dark knight.jpg" alt="dark knight">
             <div class="anime-overlay"><p>2h 12min</p></div>
           </div>
           <h5 class="anime-title">Dark knight</h5>
@@ -598,7 +598,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="lord of rings.jpg" alt="lord of the rings">
+            <img src="Thumbnails/lord of rings.jpg" alt="lord of the rings">
             <div class="anime-overlay"><p>2h 32min</p></div>
           </div>
           <h5 class="anime-title">The Lord Of The Rings</h5>
@@ -610,7 +610,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="seven.jpg" alt="whats in the box">
+            <img src="Thumbnails/seven.jpg" alt="whats in the box">
             <div class="anime-overlay"><p>2h 1min</p></div>
           </div>
           <h5 class="anime-title">Se7ven</h5>
@@ -622,7 +622,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="whiplash.jpg" alt="whiplash">
+            <img src="Thumbnails/whiplash.jpg" alt="whiplash">
             <div class="anime-overlay"><p>1h 45min</p></div>
           </div>
           <h5 class="anime-title">whiplash</h5>
@@ -644,7 +644,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="eternal.jpg" alt="eternal of sunshine">
+            <img src="Thumbnails/eternal.jfif" alt="eternal of sunshine">
             <div class="anime-overlay"><p>2h 30min</p></div>
           </div>
           <h5 class="anime-title">Eternal Sunshine of the Spotless Mind</h5>
@@ -656,7 +656,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="sci-fi.jpg" alt="sci fi image">
+            <img src="Thumbnails/sci-fi.jpg" alt="sci fi image">
             <div class="anime-overlay"><p>2h 30min</p></div>
           </div>
           <h5 class="anime-title">Stranger Things</h5>
@@ -668,7 +668,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="inception.jpg" alt="inception image">
+            <img src="Thumbnails/inception.jpg" alt="inception image">
             <div class="anime-overlay"><p>2h 12min</p></div>
           </div>
           <h5 class="anime-title">Inception</h5>
@@ -680,7 +680,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="500days.jpg" alt="500 days of summer">
+            <img src="Thumbnails/500days.jpg" alt="500 days of summer">
             <div class="anime-overlay"><p>2h 32min</p></div>
           </div>
           <h5 class="anime-title">500 Days of Summer</h5>
@@ -692,7 +692,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="oldboy.png" alt="old boy ">
+            <img src="Thumbnails/oldboy.png" alt="old boy ">
             <div class="anime-overlay"><p>2h 1min</p></div>
           </div>
           <h5 class="anime-title">Oldboy</h5>
@@ -704,7 +704,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="isaw.jpg" alt="i saw the">
+            <img src="Thumbnails/isaw.jpg" alt="i saw the">
             <div class="anime-overlay"><p>1h 45min</p></div>
           </div>
           <h5 class="anime-title">I Saw the Devil</h5>
@@ -725,7 +725,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="final.jpg" alt="final destination">
+            <img src="Thumbnails/final.jpg" alt="final destination">
             <div class="anime-overlay"><p>2h 3min</p></div>
           </div>
           <h5 class="anime-title">Final Destination</h5>
@@ -737,7 +737,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="got.jpg" alt="game of thrones">
+            <img src="Thumbnails/got.jpg" alt="game of thrones">
             <div class="anime-overlay"><p>2h 32min</p></div>
           </div>
           <h5 class="anime-title">Game Of Thrones</h5>
@@ -749,7 +749,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="sopranos.jpg" alt="sopranos">
+            <img src="Thumbnails/sopranos.jpg" alt="sopranos">
             <div class="anime-overlay"><p>2h 1min</p></div>
           </div>
           <h5 class="anime-title">Sopranos</h5>
@@ -761,7 +761,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="breaking.jpg" alt="breaking bad">
+            <img src="Thumbnails/breaking.jpg" alt="breaking bad">
             <div class="anime-overlay"><p>2h 3min</p></div>
           </div>
           <h5 class="anime-title">Breaking Bad</h5>
@@ -773,7 +773,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="dexter.jpg" alt="dexter">
+            <img src="Thumbnails/dexter.jpg" alt="dexter">
             <div class="anime-overlay"><p>2h</p></div>
           </div>
           <h5 class="anime-title">Dexter</h5>
@@ -785,7 +785,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="you.jpg" alt="you">
+            <img src="Thumbnails/you.jpg" alt="you">
             <div class="anime-overlay"><p>2h 35min</p></div>
           </div>
           <h5 class="anime-title">You</h5>
@@ -814,10 +814,10 @@
       <div class="col-md-4 mb-3">
         <h6 class="text-uppercase">Quick Links</h6>
         <ul class="list-unstyled">
-          <li><a href="index.html" class="text-light text-decoration-none">Home</a></li>
+          <li><a href="index.php" class="text-light text-decoration-none">Home</a></li>
           <li><a href="search.html" class="text-light text-decoration-none">search</a></li>
           <li><a href="contact.html" class="text-light text-decoration-none">contact us</a></li>
-          <li><a href="login.html" class="text-light text-decoration-none">login</a></li>
+          <li><a href="login.php" class="text-light text-decoration-none">login</a></li>
           
         </ul>
       </div>

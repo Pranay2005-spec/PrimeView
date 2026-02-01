@@ -200,15 +200,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!-- Sidebar Navbar -->
 <nav class="sidebar">
   <div class="logo">
-    <a href="login.html">
+    <a href="login.html">   
     <img src="Geometric Blue _A_ Logo Design.png"  alt="Logo">
     </a>
   </div>
   <ul class="nav-links">
-    <li><a href="index.html"><i class="bi bi-house-door"></i> <span>Home</span></a></li>
+    <li><a href="index.php"><i class="bi bi-house-door"></i> <span>Home</span></a></li>
     <li><a href="search.html"><i class="bi bi-search"></i> <span>Search</span></a></li>
     <li><a href="contact.html"><i class="bi bi-telephone"></i> <span>contact us</span></a></li>
-    <li><a href="login.html"><i class="bi bi-person"></i> <span>login</span></a></li>
+    <li><a href="login.php"><i class="bi bi-person"></i> <span>login</span></a></li>
   </ul>
 </nav>
 
@@ -290,7 +290,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
-        // Set your correct login credentials here
+        
 
 
         
