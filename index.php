@@ -1,3 +1,8 @@
+<?php
+session_start();
+$username = $_SESSION['username'] ?? null;
+$displayName = $username ? $username : 'Guest';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -191,6 +196,29 @@
       color: white;
     }
 
+    .hero-welcome {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      z-index: 5;
+      background: rgba(9, 9, 11, 0.6);
+      border: 1px solid var(--border-color);
+      padding: 10px 14px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .welcome-text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .welcome-text span {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+
     /* Main Content */
     .main-content {
       margin-left: 80px;
@@ -312,24 +340,6 @@
       font-size: 1.3rem;
     }
 
-    .btn-info-circle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      background: var(--bg-glass);
-      border: 1px solid var(--border-color);
-      color: white;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
-    }
-
-    .btn-info-circle:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: scale(1.1);
-    }
 
     .carousel-control-prev,
     .carousel-control-next {
@@ -1175,9 +1185,11 @@
 
 <!-- Main Content -->
 <div class="main-content">
-
   <!-- Hero Carousel -->
-  <div id="animeHeroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
+  <div id="animeHeroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000" data-bs-pause="false">
+    <div class="hero-welcome">
+      <div class="welcome-text">Welcome, <span><?php echo htmlspecialchars($displayName); ?></span></div>
+    </div>
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -1202,7 +1214,6 @@
             <span class="meta-badge">Thriller</span>
           </div>
           <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
-          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
         </div>
       </div>
 
@@ -1220,7 +1231,6 @@
             <span class="meta-badge">Drama</span>
           </div>
           <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
-          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
         </div>
       </div>
 
@@ -1238,7 +1248,6 @@
             <span class="meta-badge">Romance</span>
           </div>
           <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
-          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
         </div>
       </div>
 
@@ -1256,7 +1265,6 @@
             <span class="meta-badge">Drama</span>
           </div>
           <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
-          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
         </div>
       </div>
 
@@ -1274,7 +1282,6 @@
             <span class="meta-badge">Sci-Fi</span>
           </div>
           <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
-          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
         </div>
       </div>
 
@@ -1292,7 +1299,6 @@
             <span class="meta-badge">Action</span>
           </div>
           <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
-          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
         </div>
       </div>
     </div>
@@ -1309,7 +1315,6 @@
   <section class="section container">
     <div class="section-header">
       <h2 class="section-title">Browse by Genre</h2>
-      <button class="see-all-btn">View All <i class="bi bi-chevron-right"></i></button>
     </div>
 
     <div class="genre-grid">
@@ -1408,7 +1413,7 @@
   <section class="section container">
     <div class="section-header">
       <h2 class="section-title">Top Rated Movies</h2>
-      <button class="see-all-btn">View All <i class="bi bi-chevron-right"></i></button>
+      <a href="genere.html?genre=top-rated" class="see-all-btn">View All <i class="bi bi-chevron-right"></i></a>
     </div>
 
     <div class="movie-grid">
@@ -1554,7 +1559,7 @@
   <section class="section container">
     <div class="section-header">
       <h2 class="section-title">New Releases</h2>
-      <button class="see-all-btn">View All <i class="bi bi-chevron-right"></i></button>
+      <a href="genere.html?genre=new-releases" class="see-all-btn">View All <i class="bi bi-chevron-right"></i></a>
     </div>
 
     <div class="movie-grid">
@@ -1700,7 +1705,7 @@
   <section class="section container">
     <div class="section-header">
       <h2 class="section-title">Trending Now</h2>
-      <button class="see-all-btn">View All <i class="bi bi-chevron-right"></i></button>
+      <a href="genere.html?genre=trending" class="see-all-btn">View All <i class="bi bi-chevron-right"></i></a>
     </div>
 
     <div class="movie-grid">
@@ -1954,10 +1959,12 @@
       }
     });
   });
+
 </script>
 
 </body>
 </html>
+
 
 
 
