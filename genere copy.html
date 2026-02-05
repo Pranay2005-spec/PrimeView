@@ -207,20 +207,149 @@
       color: white;
     }
     
-  </style>
+  
+    /* Standardized Sidebar (match index.php) */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 80px;
+      background: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+      padding: 20px 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      overflow-x: hidden;
+    }
+
+    .sidebar:hover {
+      width: 260px;
+      box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar .logo {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 10px;
+    }
+
+    .sidebar .logo img {
+      width: 45px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+    }
+
+    .sidebar:hover .logo img {
+      width: 100px;
+    }
+
+    .sidebar .nav-links {
+      list-style: none;
+      padding: 0 12px;
+    }
+
+    .sidebar .nav-links li {
+      margin: 8px 0;
+    }
+
+    .sidebar .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      color: var(--text-secondary, #a1a1aa);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar .nav-links a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-1, linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .sidebar .nav-links a:hover::before {
+      opacity: 1;
+    }
+
+    .sidebar .nav-links a:hover {
+      color: #fff;
+      transform: translateX(5px);
+    }
+
+    .sidebar .nav-links a i {
+      font-size: 1.3rem;
+      min-width: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar .nav-links a:hover i {
+      transform: scale(1.1);
+    }
+
+    .sidebar .nav-links a span {
+      opacity: 0;
+      white-space: nowrap;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar:hover .nav-links a span {
+      opacity: 1;
+    }
+
+    .sidebar .nav-links a.active {
+      background: var(--gradient-1, linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%));
+      color: #fff;
+    }
+
+    .main-content,
+    .content {
+      margin-left: 80px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 60px;
+      }
+
+      .sidebar:hover {
+        width: 200px;
+      }
+
+      .main-content,
+      .content {
+        margin-left: 60px;
+      }
+    }\n  </style>
 </head>
 <body>
 
 <!-- Sidebar -->
 <nav class="sidebar">
   <div class="logo">
-    <a href="login.html"><img src="Geometric Blue _A_ Logo Design.png" alt="Aura Logo" /></a>
+    <a href="login.php">
+      <img src="Geometric Blue _A_ Logo Design.png" alt="Logo">
+    </a>
   </div>
   <ul class="nav-links">
-    <li><a href="index.php"><i class="bi bi-house-door"></i> <span>Home</span></a></li>
-    <li><a href="search.html"><i class="bi bi-search"></i> <span>Search</span></a></li>
-    <li><a href="contact.html"><i class="bi bi-telephone"></i> <span>Contact</span></a></li>
-    <li><a href="login.php"><i class="bi bi-person"></i> <span>Login</span></a></li>
+    <li><a href="index.php"><i class="bi bi-house-door-fill"></i> <span>Home</span></a></li>
+    <li><a href="search.html" class="active"><i class="bi bi-search"></i> <span>Discover</span></a></li>
+    <li><a href="contact.html"><i class="bi bi-headset"></i> <span>Support</span></a></li>
+    <li><a href="login.php"><i class="bi bi-person-circle"></i> <span>Account</span></a></li>
   </ul>
 </nav>
 
@@ -235,7 +364,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="eternal.jpg" alt="eternal of sunshine">
+            <img src="Thumbnails/eternal.jpg" alt="eternal of sunshine">
             <div class="anime-overlay"><p>2h 30min</p></div>
           </div>
           <h5 class="anime-title">Eternal Sunshine of the Spotless Mind</h5>
@@ -247,7 +376,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="sci-fi.jpg" alt="sci fi image">
+            <img src="Thumbnails/sci-fi.jpg" alt="sci fi image">
             <div class="anime-overlay"><p>2h 30min</p></div>
           </div>
           <h5 class="anime-title">Stranger Things</h5>
@@ -259,7 +388,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="inception.jpg" alt="inception image">
+            <img src="Thumbnails/inception.jpg" alt="inception image">
             <div class="anime-overlay"><p>2h 12min</p></div>
           </div>
           <h5 class="anime-title">Inception</h5>
@@ -271,7 +400,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="500days.jpg" alt="500 days of summer">
+            <img src="Thumbnails/500days.jpg" alt="500 days of summer">
             <div class="anime-overlay"><p>2h 32min</p></div>
           </div>
           <h5 class="anime-title">500 Days of Summer</h5>
@@ -283,7 +412,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="oldboy.png" alt="old boy ">
+            <img src="Thumbnails/oldboy.png" alt="old boy ">
             <div class="anime-overlay"><p>2h 1min</p></div>
           </div>
           <h5 class="anime-title">Oldboy</h5>
@@ -295,7 +424,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="isaw.jpg" alt="i saw the">
+            <img src="Thumbnails/isaw.jpg" alt="i saw the">
             <div class="anime-overlay"><p>1h 45min</p></div>
           </div>
           <h5 class="anime-title">I Saw the Devil</h5>
@@ -315,7 +444,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="final.jpg" alt="final destination">
+            <img src="Thumbnails/final.jpg" alt="final destination">
             <div class="anime-overlay"><p>2h 3min</p></div>
           </div>
           <h5 class="anime-title">Final Destination</h5>
@@ -327,7 +456,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="got.jpg" alt="game of thrones">
+            <img src="Thumbnails/got.jpg" alt="game of thrones">
             <div class="anime-overlay"><p>2h 32min</p></div>
           </div>
           <h5 class="anime-title">Game Of Thrones</h5>
@@ -339,7 +468,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="sopranos.jpg" alt="sopranos">
+            <img src="Thumbnails/sopranos.jpg" alt="sopranos">
             <div class="anime-overlay"><p>2h 1min</p></div>
           </div>
           <h5 class="anime-title">Sopranos</h5>
@@ -351,7 +480,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="breaking.jpg" alt="breaking bad">
+            <img src="Thumbnails/breaking.jpg" alt="breaking bad">
             <div class="anime-overlay"><p>2h 3min</p></div>
           </div>
           <h5 class="anime-title">Breaking Bad</h5>
@@ -363,7 +492,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="dexter.jpg" alt="dexter">
+            <img src="Thumbnails/dexter.jpg" alt="dexter">
             <div class="anime-overlay"><p>2h</p></div>
           </div>
           <h5 class="anime-title">Dexter</h5>
@@ -375,7 +504,7 @@
       <div class="col-6 col-md-2">
         <div class="anime-card">
           <div class="anime-thumb">
-            <img src="you.jpg" alt="you">
+            <img src="Thumbnails/you.jpg" alt="you">
             <div class="anime-overlay"><p>2h 35min</p></div>
           </div>
           <h5 class="anime-title">You</h5>
@@ -423,3 +552,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+

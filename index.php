@@ -7,837 +7,1958 @@
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    body {
-       background-color: #121212;      
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    :root {
+      --primary: #8b5cf6;
+      --primary-dark: #7c3aed;
+      --secondary: #06b6d4;
+      --accent: #f59e0b;
+      --bg-dark: #09090b;
+      --bg-card: rgba(24, 24, 27, 0.8);
+      --bg-glass: rgba(255, 255, 255, 0.03);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-primary: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --gradient-1: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+      --gradient-2: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      --gradient-3: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      --shadow-glow: 0 0 60px rgba(139, 92, 246, 0.3);
     }
 
-    /* Sidebar container */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 80px; /* collapsed width */
-  background-color: transparent; /* make transparent */
-  padding: 20px 0;
-  transition: width 0.3s ease, background-color 0.3s ease;
-  z-index: 1000;
-  overflow: hidden;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* Expand on hover */
-.sidebar:hover {
-  width: 220px;
-  background-color: rgba(12, 12, 12, 0.85); /* dark bg appears only on hover */
-  backdrop-filter: blur(10px); /* frosted glass effect */
-}
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
 
-/* Logo */
-.sidebar .logo {
-  text-align: center;
-  margin-bottom: 100px;
-}
-.sidebar .logo img {
-  width: 40px;
-  transition: width 0.3s;
-}
-.sidebar:hover .logo img {
-  width: 120px;
-}
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
 
-/* Navigation Links */
-.sidebar .nav-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.sidebar .nav-links li {
-  margin: 20px 0;
-}
-.sidebar .nav-links a {
-  display: flex;
-  align-items: center;
-  color: #fff;
-  padding: 10px 15px;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: background 0.3s ease;
-}
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
 
-/* Icon style */
-.sidebar .nav-links a i {
-  font-size: 1.4rem;
-  margin-right: 15px;
-}
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
+    }
 
-/* Hide text when collapsed */
-.sidebar .nav-links a span {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.sidebar:hover .nav-links a span {
-  opacity: 1;
-}
+    body {
+      background-color: var(--bg-dark);
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
 
-/* Hover effect on items */
-.sidebar .nav-links a:hover {
-  background-color: rgba(26, 26, 26, 0.7);
-  border-radius: 6px;
-}
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
 
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-    /* Make carousel full viewport */
-#animeHeroCarousel .carousel-item {
-  height: 70vh;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  animation: zoomEffect 6s ease-in-out infinite;
+    /* Modern Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 80px;
+      background: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color);
+      padding: 20px 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      overflow-x: hidden;
+    }
+
+    .sidebar:hover {
+      width: 260px;
+      box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar .logo {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 10px;
+    }
+
+    .sidebar .logo img {
+      width: 45px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+    }
+
+    .sidebar:hover .logo img {
+      width: 100px;
+    }
+
+    .sidebar .nav-links {
+      list-style: none;
+      padding: 0 12px;
+    }
+
+    .sidebar .nav-links li {
+      margin: 8px 0;
+    }
+
+    .sidebar .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar .nav-links a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-1);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .sidebar .nav-links a:hover::before {
+      opacity: 1;
+    }
+
+    .sidebar .nav-links a:hover {
+      color: white;
+      transform: translateX(5px);
+    }
+
+    .sidebar .nav-links a i {
+      font-size: 1.3rem;
+      min-width: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar .nav-links a:hover i {
+      transform: scale(1.1);
+    }
+
+    .sidebar .nav-links a span {
+      opacity: 0;
+      white-space: nowrap;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar:hover .nav-links a span {
+      opacity: 1;
+    }
+
+    .sidebar .nav-links a.active {
+      background: var(--gradient-1);
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 80px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 60px;
+      }
+      .sidebar:hover {
+        width: 200px;
+      }
+      .main-content {
+        margin-left: 60px;
+      }
+    }
+
+    /* Hero Carousel */
+    #animeHeroCarousel .carousel-item {
+      height: 85vh;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .dark-gradient {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(9, 9, 11, 0.95) 0%, rgba(9, 9, 11, 0.7) 40%, transparent 70%),
+                  linear-gradient(to top, rgba(9, 9, 11, 1) 0%, rgba(9, 9, 11, 0.5) 30%, transparent 60%);
+    }
+
+    .carousel-overlay {
+      position: absolute;
+      bottom: 25%;
+      left: 8%;
+      max-width: 45%;
+      z-index: 2;
+      color: white;
+    }
+
+    .carousel-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: var(--gradient-1);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+
+    .carousel-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .carousel-desc {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .carousel-meta {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .meta-badge {
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .meta-badge.rating {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-watch {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: var(--gradient-1);
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-right: 15px;
+    }
+
+    .btn-watch:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+      color: white;
+    }
+
+    .btn-watch i {
+      font-size: 1.3rem;
+    }
+
+    .btn-info-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      color: white;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-info-circle:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.1);
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      width: 60px;
+      height: 60px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    #animeHeroCarousel:hover .carousel-control-prev,
+    #animeHeroCarousel:hover .carousel-control-next {
+      opacity: 1;
+    }
+
+    .carousel-control-prev {
+      left: 30px;
+    }
+
+    .carousel-control-next {
+      right: 30px;
+    }
+
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .carousel-indicators {
+      bottom: 30px;
+    }
+
+    .carousel-indicators [data-bs-target] {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      margin: 0 6px;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-indicators .active {
+      background: var(--primary);
+      transform: scale(1.3);
+    }
+
+    @media (max-width: 768px) {
+      .carousel-overlay {
+        bottom: 15%;
+        left: 5%;
+        max-width: 90%;
+      }
+
+      .carousel-title {
+        font-size: 2rem;
+      }
+
+      .carousel-desc {
+        font-size: 0.95rem;
+      }
+
+      #animeHeroCarousel .carousel-item {
+        height: 70vh;
+      }
+    }
+
+    /* Section Styling */
+    .section {
+      padding: 60px 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 35px;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: var(--text-primary);
+    }
+
+    .section-title::before {
+      content: '';
+      width: 5px;
+      height: 35px;
+      background: var(--gradient-1);
+      border-radius: 5px;
+    }
+
+    .see-all-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .see-all-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    /* Genre Cards */
+    .genre-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 992px) {
+      .genre-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .genre-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .genre-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid var(--border-color);
+    }
+
+    .genre-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-1);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+
+    .genre-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+      border-color: var(--primary);
+    }
+
+    .genre-card:hover::before {
+      opacity: 0.3;
+    }
+
+    .genre-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .genre-card:hover .genre-img {
+      transform: scale(1.1);
+    }
+
+    .genre-label {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .genre-icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: var(--bg-glass);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      z-index: 2;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.3s ease;
+    }
+
+    .genre-card:hover .genre-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Featured Section */
+    .featured-section {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      background-image: url('Thumbnails/fightclub.jpg');
+      background-size: cover;
+      background-position: center;
+      margin: 40px 0;
+    }
+
+    .featured-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(9, 9, 11, 0.95) 0%, rgba(9, 9, 11, 0.7) 50%, rgba(9, 9, 11, 0.4) 100%);
+    }
+
+    .featured-content {
+      position: relative;
+      z-index: 2;
+      padding: 60px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .featured-info {
+      max-width: 600px;
+    }
+
+    .featured-badge {
+      display: inline-block;
+      padding: 8px 18px;
+      background: var(--gradient-2);
+      border-radius: 25px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .featured-title {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 0%, #d4d4d8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .featured-desc {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 30px;
+    }
+
+    .featured-stats {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-play-featured {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 35px;
+      background: var(--gradient-3);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-play-featured:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(236, 72, 153, 0.4);
+      color: white;
+    }
+
+    .featured-poster {
+      position: relative;
+    }
+
+    .featured-poster img {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .featured-content {
+        flex-direction: column;
+        padding: 40px 25px;
+        text-align: center;
+      }
+
+      .featured-title {
+        font-size: 2rem;
+      }
+
+      .featured-stats {
+        justify-content: center;
+      }
+    }
+
+    /* Movie Cards */
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 25px;
+    }
+
+    @media (max-width: 1200px) {
+      .movie-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .movie-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+    }
+
+    .movie-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .movie-card::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: var(--gradient-1);
+      border-radius: 18px;
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+
+    .movie-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(139, 92, 246, 0.2);
+      border-color: transparent;
+    }
+
+    .movie-card:hover::before {
+      opacity: 1;
+    }
+
+    .movie-poster {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .movie-poster img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .movie-card:hover .movie-poster img {
+      transform: scale(1.1);
+    }
+
+    .movie-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.9) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .movie-card:hover .movie-overlay {
+      opacity: 1;
+    }
+
+    .play-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--gradient-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      transform: scale(0);
+      transition: transform 0.3s ease;
+    }
+
+    .movie-card:hover .play-btn {
+      transform: scale(1);
+    }
+
+    .movie-duration {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .movie-card:hover .movie-duration {
+      opacity: 1;
+    }
+
+    .movie-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 5px 12px;
+      background: var(--gradient-2);
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .movie-info {
+      padding: 18px;
+    }
+
+    .movie-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .movie-rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+    }
+
+    .movie-rating i {
+      color: var(--accent);
+    }
+
+    .movie-rating span {
+      color: var(--text-secondary);
+    }
+
+    /* Quick Action Buttons on Cards */
+    .card-actions {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: all 0.3s ease;
+    }
+
+    .movie-card:hover .card-actions {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .card-action-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .card-action-btn:hover {
+      background: var(--primary);
+      transform: scale(1.1);
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(to top, rgba(9, 9, 11, 1), var(--bg-card));
+      border-top: 1px solid var(--border-color);
+      padding: 60px 0 30px;
+      margin-top: 80px;
+    }
+
+    .footer-brand h5 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .footer-brand h5 span {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-brand p {
+      color: var(--text-secondary);
+      max-width: 300px;
+    }
+
+    .footer-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--primary);
+    }
+
+    .social-links a i {
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover i {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 25px;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-bottom span {
+      color: var(--primary);
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-color), transparent);
+      margin: 0;
+      border: none;
+    }
+
+    /* Animation Classes */
+    .fade-in {
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Hover Glow Effect */
+    .glow-on-hover {
+      position: relative;
+    }
+
+    .glow-on-hover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+    }
+
+    .glow-on-hover:hover::after {
+      opacity: 1;
+    }
   
-}
+    /* Standardized Sidebar (match index.php) */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 80px;
+      background: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+      padding: 20px 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      overflow-x: hidden;
+    }
 
-/* Fade + Zoom Animation */
-@keyframes zoomEffect {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.05); }
-}
+    .sidebar:hover {
+      width: 260px;
+      box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5);
+    }
 
-/* Dark gradient overlay for text readability */
-.dark-gradient {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0) 60%);
-}
+    .sidebar .logo {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 10px;
+    }
 
-/* Text Overlay */
-.carousel-overlay {
-  position: absolute;
-  bottom: 20%;
-  left: 5%;
-  max-width: 40%;
-  color: white;
-}
+    .sidebar .logo img {
+      width: 45px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+    }
 
-.carousel-title {
-  font-size: 3rem;
-  font-weight: bold;
-}
+    .sidebar:hover .logo img {
+      width: 100px;
+    }
 
-.carousel-desc {
-  font-size: 1.2rem;
-  margin: 15px 0;
-}
+    .sidebar .nav-links {
+      list-style: none;
+      padding: 0 12px;
+    }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-size: 100%, 100%;
-}
+    .sidebar .nav-links li {
+      margin: 8px 0;
+    }
 
-.carousel-indicators [data-bs-target] {
-  background-color: white;
-}
+    .sidebar .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      color: var(--text-secondary, #a1a1aa);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
 
+    .sidebar .nav-links a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-1, linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
 
-.genre-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  cursor: pointer;
-}
+    .sidebar .nav-links a:hover::before {
+      opacity: 1;
+    }
 
-.genre-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(255, 0, 0, 0.3);
-}
+    .sidebar .nav-links a:hover {
+      color: #fff;
+      transform: translateX(5px);
+    }
 
-.genre-img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 12px;
-}
+    .sidebar .nav-links a i {
+      font-size: 1.3rem;
+      min-width: 30px;
+      transition: all 0.3s ease;
+    }
 
-.genre-label {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 6px 0;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 0 0 12px 12px;
-}
+    .sidebar .nav-links a:hover i {
+      transform: scale(1.1);
+    }
 
-.genre-link {
-  text-decoration: none;
-}
+    .sidebar .nav-links a span {
+      opacity: 0;
+      white-space: nowrap;
+      transition: opacity 0.3s ease;
+    }
 
+    .sidebar:hover .nav-links a span {
+      opacity: 1;
+    }
 
-.anime-card {
-  background: #111;
-  color: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
+    .sidebar .nav-links a.active {
+      background: var(--gradient-1, linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%));
+      color: #fff;
+    }
 
-.anime-card:hover {
-  transform: scale(1.05);
-}
+    .main-content,
+    .content {
+      margin-left: 80px;
+    }
 
-.anime-thumb {
-  width: 100%;
-  height: 250px;
-  overflow: hidden;
-  position: relative;
-}
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 60px;
+      }
 
-.anime-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+      .sidebar:hover {
+        width: 200px;
+      }
 
-.anime-overlay {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: rgba(255, 0, 0, 0.8);
-  text-align: center;
-  padding: 5px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.anime-card:hover .anime-overlay {
-  opacity: 1;
-}
-
-.anime-title {
-  text-align: center;
-  padding: 10px;
-  font-size: 1rem;
-  min-height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
- .section-heading {
-  color: #fff;
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  position: relative;
-  padding-left: 10px;
-  border-left: 4px solid white;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-
-.featured-anime {
-  background-image: url('fightclub.jpg'); /* background image */
-  background-size: cover;
-  background-position: center;
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  padding: 40px 20px;
-}
-
-.featured-anime::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6); /* dark overlay */
-  z-index: 0;
-}
-
-.featured-card {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.poster img {
-  width: 150px;
-  border-radius: 20px;
-}
-
-.title {
-  font-size: 1.8rem;
-}
-
-.description {
-  margin: 15px 0;
-  font-size: 1rem;
-  color: #ddd;
-  max-width: 600px;
-}
-
-.btn-purple {
-  background: #8000ff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-weight: 500;
-  border-radius: 30px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: background 0.3s ease;
-}
-
-.btn-purple:hover {
-  background: #a64dff;
-}
-
-@media (max-width: 767px) {
-  .poster {
-    margin-bottom: 20px;
-  }
-
-  .poster img {
-    width: 120px;
-  }
-
-  .title {
-    font-size: 1.4rem;
-  }
-}
-
-.carousel-overlay {
-  position: absolute;
-  bottom: 20%;
-  left: 5%;
-  max-width: 50%;
-  z-index: 2;
-  color: white;
-  text-shadow: 1px 1px 8px rgba(0,0,0,0.9);
-}
-
-@media (max-width: 768px) {
-  .carousel-overlay {
-    bottom: 10%;
-    left: 5%;
-    max-width: 90%;
-  }
-
-  .carousel-title {
-    font-size: 1.8rem;
-  }
-
-  .carousel-desc {
-    font-size: 1rem;
-  }
-
-  .btn-lg {
-    font-size: 1rem;
-    padding: 10px 20px;
-  }
-}
-
-.carousel-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-.carousel-desc {
-  font-size: 1.2rem;
-  color: #ccc;
-}
-
-.carousel .btn-danger {
-  background-color: #e50914;
-  border: none;
-  font-weight: 500;
-  border-radius: 30px;
-  transition: background 0.3s ease;
-}
-
-.carousel .btn-danger:hover {
-  background-color: #ff1e1e;
-}
-
-  </style>
+      .main-content,
+      .content {
+        margin-left: 60px;
+      }
+    }\n  </style>
 </head>
 <body>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Sidebar Navbar -->
 <nav class="sidebar">
   <div class="logo">
     <a href="login.php">
-    <img src="Geometric Blue _A_ Logo Design.png"  alt="Logo">
+      <img src="Geometric Blue _A_ Logo Design.png" alt="Logo">
     </a>
   </div>
   <ul class="nav-links">
-    <li><a href="index.php"><i class="bi bi-house-door"></i> <span>Home</span></a></li>
-    <li><a href="search.html"><i class="bi bi-search"></i> <span>Search</span></a></li>
-    <li><a href="contact.html"><i class="bi bi-telephone"></i> <span>contact us</span></a></li>
-    <li><a href="login.php"><i class="bi bi-person"></i> <span>login</span></a></li>
+    <li><a href="index.php" class="active"><i class="bi bi-house-door-fill"></i> <span>Home</span></a></li>
+    <li><a href="search.html"><i class="bi bi-search"></i> <span>Discover</span></a></li>
+    <li><a href="contact.html"><i class="bi bi-headset"></i> <span>Support</span></a></li>
+    <li><a href="login.php"><i class="bi bi-person-circle"></i> <span>Account</span></a></li>
   </ul>
 </nav>
 
-<!-- Bootstrap Icons CDN -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<!-- Main Content -->
+<div class="main-content">
 
-<!-- Anime Hero Carousel -->
-<div id="animeHeroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
-  <!-- Carousel Indicators -->
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="0" class="active"></button>
-    <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="1"></button>
-    <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="2"></button>
-    
-  </div>
+  <!-- Hero Carousel -->
+  <div id="animeHeroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
+    </div>
 
- <!-- 🎬 Enhanced Anime Hero Carousel -->
-<div id="animeHeroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
-  <!-- Indicators -->
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#animeHeroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
+    <div class="carousel-inner">
+      <!-- Slide 1 -->
+      <div class="carousel-item active" style="background-image: url('Thumbnails/memory.jpg');">
+        <div class="dark-gradient"></div>
+        <div class="carousel-overlay">
+          <span class="carousel-badge"><i class="bi bi-fire"></i> Featured</span>
+          <h2 class="carousel-title">Memories of Murder</h2>
+          <p class="carousel-desc">A chilling thriller by Bong Joon-ho. Based on true events that shocked a nation.</p>
+          <div class="carousel-meta">
+            <span class="meta-badge rating"><i class="bi bi-star-fill"></i> 8.1</span>
+            <span class="meta-badge">2003</span>
+            <span class="meta-badge">2h 12min</span>
+            <span class="meta-badge">Thriller</span>
+          </div>
+          <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
+          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
+        </div>
+      </div>
 
-  <!-- Carousel Inner -->
-  <div class="carousel-inner">
+      <!-- Slide 2 -->
+      <div class="carousel-item" style="background-image: url('Thumbnails/fightclub.jpg');">
+        <div class="dark-gradient"></div>
+        <div class="carousel-overlay">
+          <span class="carousel-badge"><i class="bi bi-trophy-fill"></i> Top Rated</span>
+          <h2 class="carousel-title">Fight Club</h2>
+          <p class="carousel-desc">Psychological thriller that digs into identity, anarchy, and the modern man.</p>
+          <div class="carousel-meta">
+            <span class="meta-badge rating"><i class="bi bi-star-fill"></i> 8.8</span>
+            <span class="meta-badge">1999</span>
+            <span class="meta-badge">2h 19min</span>
+            <span class="meta-badge">Drama</span>
+          </div>
+          <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
+          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
+        </div>
+      </div>
 
-    <!-- Slide 1 -->
-    <div class="carousel-item active" style="background-image: url('Thumbnails/memory.jpg'); background-size: cover; background-position: center;">
-      <div class="dark-gradient"></div>
-      <div class="carousel-overlay">
-        <h2 class="carousel-title mb-2">Memories of Murder</h2>
-        <p class="carousel-desc mb-3">A chilling thriller by Bong Joon-ho. Based on true events.</p>
-        <a href="player.html" class="btn btn-danger btn-lg px-4"><i class="bi bi-play-fill"></i> Watch Now</a>
+      <!-- Slide 3 -->
+      <div class="carousel-item" style="background-image: url('Thumbnails/anayam.jpg');">
+        <div class="dark-gradient"></div>
+        <div class="carousel-overlay">
+          <span class="carousel-badge"><i class="bi bi-heart-fill"></i> Romance</span>
+          <h2 class="carousel-title">Anayam Rasoolam</h2>
+          <p class="carousel-desc">A touching romantic journey through the streets of Kochi.</p>
+          <div class="carousel-meta">
+            <span class="meta-badge rating"><i class="bi bi-star-fill"></i> 7.5</span>
+            <span class="meta-badge">2013</span>
+            <span class="meta-badge">2h 15min</span>
+            <span class="meta-badge">Romance</span>
+          </div>
+          <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
+          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="carousel-item" style="background-image: url('Thumbnails/shawshank.jpg');">
+        <div class="dark-gradient"></div>
+        <div class="carousel-overlay">
+          <span class="carousel-badge"><i class="bi bi-award-fill"></i> Classic</span>
+          <h2 class="carousel-title">The Shawshank Redemption</h2>
+          <p class="carousel-desc">A powerful story of hope, friendship, and redemption behind prison walls.</p>
+          <div class="carousel-meta">
+            <span class="meta-badge rating"><i class="bi bi-star-fill"></i> 9.3</span>
+            <span class="meta-badge">1994</span>
+            <span class="meta-badge">2h 22min</span>
+            <span class="meta-badge">Drama</span>
+          </div>
+          <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
+          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
+        </div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="carousel-item" style="background-image: url('Thumbnails/inception.jpg');">
+        <div class="dark-gradient"></div>
+        <div class="carousel-overlay">
+          <span class="carousel-badge"><i class="bi bi-rocket-takeoff-fill"></i> Sci-Fi</span>
+          <h2 class="carousel-title">Inception</h2>
+          <p class="carousel-desc">A mind-bending heist through layers of dreams and reality.</p>
+          <div class="carousel-meta">
+            <span class="meta-badge rating"><i class="bi bi-star-fill"></i> 8.8</span>
+            <span class="meta-badge">2010</span>
+            <span class="meta-badge">2h 28min</span>
+            <span class="meta-badge">Sci-Fi</span>
+          </div>
+          <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
+          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
+        </div>
+      </div>
+
+      <!-- Slide 6 -->
+      <div class="carousel-item" style="background-image: url('Thumbnails/dark knight.jpg');">
+        <div class="dark-gradient"></div>
+        <div class="carousel-overlay">
+          <span class="carousel-badge"><i class="bi bi-lightning-fill"></i> Action</span>
+          <h2 class="carousel-title">The Dark Knight</h2>
+          <p class="carousel-desc">Batman faces the Joker in a gripping battle for Gotham's soul.</p>
+          <div class="carousel-meta">
+            <span class="meta-badge rating"><i class="bi bi-star-fill"></i> 9.0</span>
+            <span class="meta-badge">2008</span>
+            <span class="meta-badge">2h 32min</span>
+            <span class="meta-badge">Action</span>
+          </div>
+          <a href="player.html" class="btn-watch"><i class="bi bi-play-fill"></i> Watch Now</a>
+          <button class="btn-info-circle"><i class="bi bi-plus-lg"></i></button>
+        </div>
       </div>
     </div>
 
-    <!-- Slide 2 -->
-    <div class="carousel-item" style="background-image: url('Thumbnails/fightclub.jpg'); background-size: cover; background-position: center;">
-      <div class="dark-gradient"></div>
-      <div class="carousel-overlay">
-        <h2 class="carousel-title mb-2">Fight Club</h2>
-        <p class="carousel-desc mb-3">Psychological thriller that digs into identity and anarchy.</p>
-        <a href="player.html" class="btn btn-danger btn-lg px-4"><i class="bi bi-play-fill"></i> Watch Now</a>
-      </div>
-    </div>
-
-    <!-- Slide 3 -->
-    <div class="carousel-item" style="background-image: url('Thumbnails/anayam.jpg'); background-size: cover; background-position: center;">
-      <div class="dark-gradient"></div>
-      <div class="carousel-overlay">
-        <h2 class="carousel-title mb-2">Anayam Rasoolam</h2>
-        <p class="carousel-desc mb-3">A touching romantic journey through the streets of Kochi.</p>
-        <a href="player.html" class="btn btn-danger btn-lg px-4"><i class="bi bi-play-fill"></i> Watch Now</a>
-      </div>
-    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#animeHeroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#animeHeroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
   </div>
 
-  <!-- Controls -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#animeHeroCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#animeHeroCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div>
+  <!-- Genre Section -->
+  <section class="section container">
+    <div class="section-header">
+      <h2 class="section-title">Browse by Genre</h2>
+      <button class="see-all-btn">View All <i class="bi bi-chevron-right"></i></button>
+    </div>
 
-<hr>
-<!-- Genre Grid Section -->
-<section class="container mt-5">
-<h3 class="section-heading"> Genre</h3>
-
-  <div class="row g-4">
-
-    <!-- Genre Card -->
-    <div class="col-6 col-md-2">
-      <a href="genere.html" class="genre-link">
+    <div class="genre-grid">
+      <a href="genere.html?genre=action" class="genre-link">
         <div class="genre-card">
           <img src="Thumbnails/action.jpg" alt="Action" class="genre-img">
+          <div class="genre-icon"><i class="bi bi-lightning-fill"></i></div>
           <div class="genre-label">Action</div>
         </div>
       </a>
-    </div>
 
-    <div class="col-6 col-md-2">
-      <a href="genere.html" class="genre-link">
+      <a href="genere.html?genre=adventure" class="genre-link">
         <div class="genre-card">
           <img src="Thumbnails/adventure.webp" alt="Adventure" class="genre-img">
+          <div class="genre-icon"><i class="bi bi-compass-fill"></i></div>
           <div class="genre-label">Adventure</div>
         </div>
       </a>
-    </div>
 
-    <div class="col-6 col-md-2">
-      <a href="genere.html" class="genre-link">
+      <a href="genere.html?genre=comedy" class="genre-link">
         <div class="genre-card">
           <img src="Thumbnails/comedy.jpg" alt="Comedy" class="genre-img">
+          <div class="genre-icon"><i class="bi bi-emoji-laughing-fill"></i></div>
           <div class="genre-label">Comedy</div>
         </div>
       </a>
-    </div>
 
-    <div class="col-6 col-md-2">
-      <a href="genere.html" class="genre-link">
+      <a href="genere.html?genre=sci-fi" class="genre-link">
         <div class="genre-card">
           <img src="Thumbnails/sci-fi.jpg" alt="sci-fi" class="genre-img">
-          <div class="genre-label">sci-fi</div>
+          <div class="genre-icon"><i class="bi bi-rocket-takeoff-fill"></i></div>
+          <div class="genre-label">Sci-Fi</div>
         </div>
       </a>
-    </div>
 
-   
-    <div class="col-6 col-md-2">
-      <a href="genere.html" class="genre-link">
+      <a href="genere.html?genre=rom-com" class="genre-link">
         <div class="genre-card">
           <img src="Thumbnails/romcom.webp" alt="Rom-com" class="genre-img">
+          <div class="genre-icon"><i class="bi bi-heart-fill"></i></div>
           <div class="genre-label">Rom-Com</div>
         </div>
       </a>
-    </div>
 
-    <div class="col-6 col-md-2">
-      <a href="genere.html" class="genre-link">
+      <a href="genere.html?genre=psychological" class="genre-link">
         <div class="genre-card">
-          <img src="Thumbnails/psycho.jpg" alt="Drama" class="genre-img">
+          <img src="Thumbnails/psycho.jpg" alt="Psychological" class="genre-img">
+          <div class="genre-icon"><i class="bi bi-brain"></i></div>
           <div class="genre-label">Psychological</div>
         </div>
       </a>
     </div>
+  </section>
 
-    <hr>
-</section>
+  <hr class="divider">
 
-<section>
-<!-- featured Movie section-->
-<br>
-
-  <h3 class="section-heading"> Featured Movie</h3>
-<div class="featured-anime container my-5">
-  <div class="featured-card d-flex flex-column flex-md-row align-items-center">
-    <div class="info text-white ms-md-4 text-center text-md-start">
-      <h2 class="title fw-bold">Fight Club</h2>
-      <p class="description">
-       “An insomniac office worker, trapped in the monotony of corporate life, 
-       crosses paths with a mysterious soap salesman. Together, they form an underground fight club as a release from 
-       their frustrations, but what begins as raw, 
-       physical rebellion soon spirals into a dangerous game of identity, chaos, and the unraveling of reality itself.”
-      </p>
-      <a href="player.html" class="btn btn-purple">
-        <i class="bi bi-play-fill"></i> Play Now
-      </a>
+  <!-- Featured Movie Section -->
+  <section class="section container">
+    <div class="section-header">
+      <h2 class="section-title">Featured Movie</h2>
     </div>
-  </div>
+
+    <div class="featured-section">
+      <div class="featured-overlay"></div>
+      <div class="featured-content">
+        <div class="featured-info">
+          <span class="featured-badge"><i class="bi bi-gem"></i> Editor's Choice</span>
+          <h2 class="featured-title">Fight Club</h2>
+          <p class="featured-desc">
+            "An insomniac office worker, trapped in the monotony of corporate life, 
+            crosses paths with a mysterious soap salesman. Together, they form an underground fight club as a release from 
+            their frustrations, but what begins as raw, physical rebellion soon spirals into a dangerous game of identity, chaos, and the unraveling of reality itself."
+          </p>
+          <div class="featured-stats">
+            <div class="stat-item">
+              <div class="stat-value">8.8</div>
+              <div class="stat-label">IMDB</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">2h 19m</div>
+              <div class="stat-label">Duration</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">1999</div>
+              <div class="stat-label">Year</div>
+            </div>
+          </div>
+          <a href="player.html" class="btn-play-featured">
+            <i class="bi bi-play-fill"></i> Play Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top Rated Movies -->
+  <section class="section container">
+    <div class="section-header">
+      <h2 class="section-title">Top Rated Movies</h2>
+      <button class="see-all-btn">View All <i class="bi bi-chevron-right"></i></button>
+    </div>
+
+    <div class="movie-grid">
+      <!-- Card 1 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/shawshank.jpg" alt="The Shawshank Redemption">
+          <span class="movie-badge">Top 10</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">2h 30min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">The Shawshank Redemption</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.9/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/the godfather.png" alt="The Godfather">
+          <span class="movie-badge">Classic</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">2h 55min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">The Godfather</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.8/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/dark knight.jpg" alt="Dark Knight">
+          <span class="movie-badge">Fan Fav</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">2h 32min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">The Dark Knight</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.8/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/lord of rings.jpg" alt="Lord of the Rings">
+          <span class="movie-badge">Epic</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">3h 21min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">The Lord Of The Rings</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>5.0/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/seven.jpg" alt="Se7en">
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">2h 7min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">Se7en</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.4/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/whiplash.jpg" alt="Whiplash">
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">1h 45min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">Whiplash</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.5/5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- New Movies -->
+  <section class="section container">
+    <div class="section-header">
+      <h2 class="section-title">New Releases</h2>
+      <button class="see-all-btn">View All <i class="bi bi-chevron-right"></i></button>
+    </div>
+
+    <div class="movie-grid">
+      <!-- Card 1 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/eternal.jfif" alt="Eternal Sunshine">
+          <span class="movie-badge">New</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">1h 48min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">Eternal Sunshine of the Spotless Mind</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.7/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/sci-fi.jpg" alt="Stranger Things">
+          <span class="movie-badge">Series</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">4 Seasons</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">Stranger Things</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.6/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/inception.jpg" alt="Inception">
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">2h 28min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">Inception</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.8/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/500days.jpg" alt="500 Days of Summer">
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">1h 35min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">500 Days of Summer</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>3.9/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/oldboy.png" alt="Oldboy">
+          <span class="movie-badge">Korean</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">2h 0min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">Oldboy</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.4/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/isaw.jpg" alt="I Saw the Devil">
+          <span class="movie-badge">Thriller</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">2h 21min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">I Saw the Devil</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.5/5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trending Now -->
+  <section class="section container">
+    <div class="section-header">
+      <h2 class="section-title">Trending Now</h2>
+      <button class="see-all-btn">View All <i class="bi bi-chevron-right"></i></button>
+    </div>
+
+    <div class="movie-grid">
+      <!-- Card 1 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/final.jpg" alt="Final Destination">
+          <span class="movie-badge">Hot</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">1h 38min</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">Final Destination</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.2/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/got.jpg" alt="Game of Thrones">
+          <span class="movie-badge">#1 Series</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">8 Seasons</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">Game Of Thrones</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.9/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/sopranos.jpg" alt="The Sopranos">
+          <span class="movie-badge">Legendary</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">6 Seasons</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">The Sopranos</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.6/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/breaking.jpg" alt="Breaking Bad">
+          <span class="movie-badge">GOAT</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">5 Seasons</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">Breaking Bad</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.8/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/dexter.jpg" alt="Dexter">
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">8 Seasons</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">Dexter</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.3/5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="Thumbnails/you.jpg" alt="You">
+          <span class="movie-badge">Trending</span>
+          <div class="movie-overlay">
+            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+          </div>
+          <div class="movie-duration">4 Seasons</div>
+          <div class="card-actions">
+            <button class="card-action-btn"><i class="bi bi-heart"></i></button>
+            <button class="card-action-btn"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h5 class="movie-title">You</h5>
+          <div class="movie-rating">
+            <i class="bi bi-star-fill"></i>
+            <span>4.1/5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <!-- Branding -->
+        <div class="col-md-4 mb-4">
+          <div class="footer-brand">
+            <h5>Aura<span>.stream</span></h5>
+            <p>Stream your favorite movies anytime, anywhere. The ultimate destination for entertainment.</p>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="col-md-4 mb-4">
+          <h6 class="footer-title">Quick Links</h6>
+          <ul class="footer-links">
+            <li><a href="index.php"><i class="bi bi-chevron-right"></i> Home</a></li>
+            <li><a href="search.html"><i class="bi bi-chevron-right"></i> Discover</a></li>
+            <li><a href="contact.html"><i class="bi bi-chevron-right"></i> Support</a></li>
+            <li><a href="login.php"><i class="bi bi-chevron-right"></i> Account</a></li>
+          </ul>
+        </div>
+
+        <!-- Social Media / Contact -->
+        <div class="col-md-4 mb-4">
+          <h6 class="footer-title">Connect With Us</h6>
+          <div class="social-links">
+            <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i> Facebook</a>
+            <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i> Twitter</a>
+            <a href="https://mail.google.com/mail/u/0/"><i class="bi bi-envelope-fill"></i> support@aura.stream</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2025 <span>Aura.stream</span> — All rights reserved. Made with <i class="bi bi-heart-fill" style="color: #ef4444;"></i>
+      </div>
+    </div>
+  </footer>
+
 </div>
-</section>
 
-<!-- top rated movies-->
- <section>
-  <div class="container my-5">
-    <div class="row g-4 justify-content-center">
-      <h3 class="section-heading"> Top Rated Movies</h3>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-      <!-- Card 1 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/shawshank.jpg" alt="shawshank redemption">
-            <div class="anime-overlay"><p>2h 30min</p></div>
-          </div>
-          <h5 class="anime-title">The shawshank redemption</h5>
-          <p class="text-center text-warning m-0">⭐ 4.9/5</p>
-        </div>
-      </div>
+<script>
+  function titleToPlayerUrl(title) {
+    return `player.html?title=${encodeURIComponent(title)}`;
+  }
 
-      <!-- Card 2 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/the godfather.png" alt="godfather">
-            <div class="anime-overlay"><p>2h 30min</p></div>
-          </div>
-          <h5 class="anime-title">The Godfather</h5>
-          <p class="text-center text-warning m-0">⭐ 4.8/5</p>
-        </div>
-      </div>
+  // Add animation on scroll
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
 
-      <!-- Card 3 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/dark knight.jpg" alt="dark knight">
-            <div class="anime-overlay"><p>2h 12min</p></div>
-          </div>
-          <h5 class="anime-title">Dark knight</h5>
-          <p class="text-center text-warning m-0">⭐ 4.8/5</p>
-        </div>
-      </div>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in');
+      }
+    });
+  }, observerOptions);
 
-      <!-- Card 4 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/lord of rings.jpg" alt="lord of the rings">
-            <div class="anime-overlay"><p>2h 32min</p></div>
-          </div>
-          <h5 class="anime-title">The Lord Of The Rings</h5>
-          <p class="text-center text-warning m-0">⭐ 5/5</p>
-        </div>
-      </div>
+  document.querySelectorAll('.movie-card, .genre-card').forEach(card => {
+    observer.observe(card);
+  });
 
-      <!-- Card 5 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/seven.jpg" alt="whats in the box">
-            <div class="anime-overlay"><p>2h 1min</p></div>
-          </div>
-          <h5 class="anime-title">Se7ven</h5>
-          <p class="text-center text-warning m-0">⭐ 4.4/5</p>
-        </div>
-      </div>
+  // Card like button functionality
+  document.querySelectorAll('.card-action-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const icon = btn.querySelector('i');
+      if (icon.classList.contains('bi-heart')) {
+        icon.classList.remove('bi-heart');
+        icon.classList.add('bi-heart-fill');
+        icon.style.color = '#ef4444';
+      } else if (icon.classList.contains('bi-heart-fill')) {
+        icon.classList.remove('bi-heart-fill');
+        icon.classList.add('bi-heart');
+        icon.style.color = '';
+      }
+    });
+  });
 
-      <!-- Card 6 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/whiplash.jpg" alt="whiplash">
-            <div class="anime-overlay"><p>1h 45min</p></div>
-          </div>
-          <h5 class="anime-title">whiplash</h5>
-          <p class="text-center text-warning m-0">⭐ 4.5/5</p>
-        </div>
-      </div>
+  // Wire carousel buttons
+  document.querySelectorAll('.carousel-item').forEach(item => {
+    const titleEl = item.querySelector('.carousel-title');
+    const btn = item.querySelector('.btn-watch');
+    if (titleEl && btn) {
+      btn.setAttribute('href', titleToPlayerUrl(titleEl.textContent.trim()));
+    }
+  });
 
-    </div>
-  </div>
-</section>
+  // Featured section button
+  const featuredTitle = document.querySelector('.featured-title');
+  const featuredBtn = document.querySelector('.btn-play-featured');
+  if (featuredTitle && featuredBtn) {
+    featuredBtn.setAttribute('href', titleToPlayerUrl(featuredTitle.textContent.trim()));
+  }
 
-<!-- new movies -->
-<section>
-  <div class="container my-5">
-    <div class="row g-4 justify-content-center">
-      <h3 class="section-heading"> New Movies</h3>
-
-      <!-- Card 1 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/eternal.jfif" alt="eternal of sunshine">
-            <div class="anime-overlay"><p>2h 30min</p></div>
-          </div>
-          <h5 class="anime-title">Eternal Sunshine of the Spotless Mind</h5>
-          <p class="text-center text-warning m-0">⭐ 4.7/5</p>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/sci-fi.jpg" alt="sci fi image">
-            <div class="anime-overlay"><p>2h 30min</p></div>
-          </div>
-          <h5 class="anime-title">Stranger Things</h5>
-          <p class="text-center text-warning m-0">⭐ 4.6/5</p>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/inception.jpg" alt="inception image">
-            <div class="anime-overlay"><p>2h 12min</p></div>
-          </div>
-          <h5 class="anime-title">Inception</h5>
-          <p class="text-center text-warning m-0">⭐ 4.8/5</p>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/500days.jpg" alt="500 days of summer">
-            <div class="anime-overlay"><p>2h 32min</p></div>
-          </div>
-          <h5 class="anime-title">500 Days of Summer</h5>
-          <p class="text-center text-warning m-0">⭐ 3.9/5</p>
-        </div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/oldboy.png" alt="old boy ">
-            <div class="anime-overlay"><p>2h 1min</p></div>
-          </div>
-          <h5 class="anime-title">Oldboy</h5>
-          <p class="text-center text-warning m-0">⭐ 4.4/5</p>
-        </div>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/isaw.jpg" alt="i saw the">
-            <div class="anime-overlay"><p>1h 45min</p></div>
-          </div>
-          <h5 class="anime-title">I Saw the Devil</h5>
-          <p class="text-center text-warning m-0">⭐ 4.5/5</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container my-5">
-    <div class="row g-4 justify-content-center">
-      <h3 class="section-heading">Trending Now</h3>
-
-      <!-- Card 1 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/final.jpg" alt="final destination">
-            <div class="anime-overlay"><p>2h 3min</p></div>
-          </div>
-          <h5 class="anime-title">Final Destination</h5>
-          <p class="text-center text-warning m-0">⭐ 4.2/5</p>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/got.jpg" alt="game of thrones">
-            <div class="anime-overlay"><p>2h 32min</p></div>
-          </div>
-          <h5 class="anime-title">Game Of Thrones</h5>
-          <p class="text-center text-warning m-0">⭐ 4.9/5</p>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/sopranos.jpg" alt="sopranos">
-            <div class="anime-overlay"><p>2h 1min</p></div>
-          </div>
-          <h5 class="anime-title">Sopranos</h5>
-          <p class="text-center text-warning m-0">⭐ 4.6/5</p>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/breaking.jpg" alt="breaking bad">
-            <div class="anime-overlay"><p>2h 3min</p></div>
-          </div>
-          <h5 class="anime-title">Breaking Bad</h5>
-          <p class="text-center text-warning m-0">⭐ 4.8/5</p>
-        </div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/dexter.jpg" alt="dexter">
-            <div class="anime-overlay"><p>2h</p></div>
-          </div>
-          <h5 class="anime-title">Dexter</h5>
-          <p class="text-center text-warning m-0">⭐ 4.3/5</p>
-        </div>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="col-6 col-md-2">
-        <div class="anime-card">
-          <div class="anime-thumb">
-            <img src="Thumbnails/you.jpg" alt="you">
-            <div class="anime-overlay"><p>2h 35min</p></div>
-          </div>
-          <h5 class="anime-title">You</h5>
-          <p class="text-center text-warning m-0">⭐ 4.1/5</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="bg-dark text-light pt-4 pb-3 mt-5">
-  <div class="container text-center text-md-start">
-    <div class="row">
-
-      <!-- Branding -->
-      <div class="col-md-4 mb-3">
-        <h5 class="text-uppercase fw-bold">
-          Aura<span style="color:#e50914;">.stream</span>
-        </h5>
-        <p>Stream your favorite Movies anytime, anywhere.</p>
-      </div>
-
-      <!-- Navigation Links -->
-      <div class="col-md-4 mb-3">
-        <h6 class="text-uppercase">Quick Links</h6>
-        <ul class="list-unstyled">
-          <li><a href="index.php" class="text-light text-decoration-none">Home</a></li>
-          <li><a href="search.html" class="text-light text-decoration-none">search</a></li>
-          <li><a href="contact.html" class="text-light text-decoration-none">contact us</a></li>
-          <li><a href="login.php" class="text-light text-decoration-none">login</a></li>
-          
-        </ul>
-      </div>
-
-      <!-- Social Media / Contact -->
-      <div class="col-md-4 mb-3">
-        <h6 class="text-uppercase">Increase your Aura</h6>
-        <a href="https://www.facebook.com/" class="text-light me-3"><i class="bi bi-facebook"></i> Facebook</a><br />
-        <a href="https://x.com/?lang=en" class="text-light me-3"><i class="bi bi-twitter-x"></i> Twitter</a><br />
-        <a href="https://mail.google.com/mail/u/0/" class="text-light"><i class="bi bi-envelope"></i> support@Aura.stream</a>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="text-center mt-4 text-secondary small">
-    © 2025 Aura.stream — All rights reserved.
-  </div>
-</footer>
-
+  // Movie cards click -> player page
+  document.querySelectorAll('.movie-card').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const titleEl = card.querySelector('.movie-title');
+      if (titleEl) {
+        window.location.href = titleToPlayerUrl(titleEl.textContent.trim());
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
+
+
+
+

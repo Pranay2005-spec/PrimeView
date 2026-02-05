@@ -244,7 +244,134 @@
     .login-box button:hover {
       background-color: #17a689;
     }
-  </style>
+  
+    /* Standardized Sidebar (match index.php) */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 80px;
+      background: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+      padding: 20px 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      overflow-x: hidden;
+    }
+
+    .sidebar:hover {
+      width: 260px;
+      box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar .logo {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 10px;
+    }
+
+    .sidebar .logo img {
+      width: 45px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+    }
+
+    .sidebar:hover .logo img {
+      width: 100px;
+    }
+
+    .sidebar .nav-links {
+      list-style: none;
+      padding: 0 12px;
+    }
+
+    .sidebar .nav-links li {
+      margin: 8px 0;
+    }
+
+    .sidebar .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      color: var(--text-secondary, #a1a1aa);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar .nav-links a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-1, linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .sidebar .nav-links a:hover::before {
+      opacity: 1;
+    }
+
+    .sidebar .nav-links a:hover {
+      color: #fff;
+      transform: translateX(5px);
+    }
+
+    .sidebar .nav-links a i {
+      font-size: 1.3rem;
+      min-width: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar .nav-links a:hover i {
+      transform: scale(1.1);
+    }
+
+    .sidebar .nav-links a span {
+      opacity: 0;
+      white-space: nowrap;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar:hover .nav-links a span {
+      opacity: 1;
+    }
+
+    .sidebar .nav-links a.active {
+      background: var(--gradient-1, linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%));
+      color: #fff;
+    }
+
+    .main-content,
+    .content {
+      margin-left: 80px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 60px;
+      }
+
+      .sidebar:hover {
+        width: 200px;
+      }
+
+      .main-content,
+      .content {
+        margin-left: 60px;
+      }
+    }\n  </style>
 </head>
 <body>
 

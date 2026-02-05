@@ -9,80 +9,174 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
   <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-  <link href="https://unpkg.com/video.js@8.10.0/dist/themes/city/index.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      background-color: #0a0a0a;
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #fff;
+    :root {
+      --primary: #8b5cf6;
+      --primary-dark: #7c3aed;
+      --secondary: #06b6d4;
+      --accent: #f59e0b;
+      --bg-dark: #09090b;
+      --bg-card: rgba(24, 24, 27, 0.8);
+      --bg-glass: rgba(255, 255, 255, 0.03);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-primary: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --gradient-1: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+      --gradient-2: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      --shadow-glow: 0 0 60px rgba(139, 92, 246, 0.3);
     }
 
-    a{
-      text-decoration: none;
-      color:inherit;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    /* Sidebar stays the same */
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Modern Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
       left: 0;
       height: 100vh;
       width: 80px;
-      background-color: rgba(0, 0, 0, 0.85);
+      background: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color);
       padding: 20px 0;
-      transition: width 0.3s ease, background-color 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1000;
       overflow-x: hidden;
     }
 
     .sidebar:hover {
-      width: 220px;
-      background-color: rgba(24, 24, 24, 0.95);
-      backdrop-filter: blur(10px);
+      width: 260px;
+      box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5);
     }
 
     .sidebar .logo {
       text-align: center;
-      margin-bottom: 80px;
+      margin-bottom: 50px;
+      padding: 10px;
     }
 
     .sidebar .logo img {
-      width: 40px;
-      transition: width 0.3s;
+      width: 45px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
     }
 
     .sidebar:hover .logo img {
-      width: 120px;
+      width: 100px;
     }
 
     .sidebar .nav-links {
       list-style: none;
-      padding: 0;
+      padding: 0 12px;
     }
 
     .sidebar .nav-links li {
-      margin: 20px 0;
+      margin: 8px 0;
     }
 
     .sidebar .nav-links a {
       display: flex;
       align-items: center;
-      padding: 10px 15px;
-      color: #fff;
+      padding: 14px 18px;
+      color: var(--text-secondary);
       text-decoration: none;
-      transition: background 0.3s ease;
-      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar .nav-links a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-1);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .sidebar .nav-links a:hover::before {
+      opacity: 1;
+    }
+
+    .sidebar .nav-links a:hover {
+      color: white;
+      transform: translateX(5px);
     }
 
     .sidebar .nav-links a i {
-      font-size: 1.4rem;
-      margin-right: 10px;
+      font-size: 1.3rem;
+      min-width: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar .nav-links a:hover i {
+      transform: scale(1.1);
     }
 
     .sidebar .nav-links a span {
       opacity: 0;
+      white-space: nowrap;
       transition: opacity 0.3s ease;
     }
 
@@ -90,257 +184,1819 @@
       opacity: 1;
     }
 
-    .sidebar .nav-links a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 5px;
+    .sidebar .nav-links a.active {
+      background: var(--gradient-1);
+      color: white;
     }
 
+    /* Main Content */
     .content {
       margin-left: 80px;
-      padding: 20px;
+      padding: 30px 40px;
+      min-height: 100vh;
     }
 
     @media (max-width: 768px) {
       .sidebar {
         width: 60px;
       }
+      .sidebar:hover {
+        width: 200px;
+      }
       .content {
         margin-left: 60px;
+        padding: 20px;
       }
     }
 
-    .video-container {
-      max-width: 1000px;
-      margin: 0 auto;
+    /* Page Header */
+    .page-header {
+      max-width: 1200px;
+      margin: 0 auto 30px auto;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .back-btn {
+      width: 45px;
+      height: 45px;
       border-radius: 12px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      transform: translateX(-3px);
+    }
+
+    .page-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .page-title span {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Video Container */
+    .video-wrapper {
+      max-width: 1200px;
+      margin: 0 auto 40px auto;
+    }
+
+    .video-container {
+      position: relative;
+      border-radius: 20px;
       overflow: hidden;
       background: #000;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      box-shadow: var(--shadow-glow);
+      border: 1px solid var(--border-color);
+    }
+
+    .video-container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: var(--gradient-1);
+      border-radius: 22px;
+      z-index: -1;
+      opacity: 0.5;
+      filter: blur(20px);
     }
 
     .video-js {
       width: 100%;
-      height: auto;
+      aspect-ratio: 16/9;
+      border-radius: 20px;
     }
 
-    .episode-list {
-      display: none !important;
+    .video-js video {
+      object-fit: cover;
     }
 
-    .movie-details {
-      max-width: 1000px;
-      margin: 40px auto;
-      background-color: #181818;
+    .video-js .vjs-poster {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .video-js .vjs-big-play-button {
+      background: var(--gradient-1) !important;
+      border: none !important;
+      border-radius: 50% !important;
+      width: 80px !important;
+      height: 80px !important;
+      line-height: 80px !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .video-js .vjs-big-play-button:hover {
+      transform: translate(-50%, -50%) scale(1.1) !important;
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.6) !important;
+    }
+
+    .video-js .vjs-control-bar {
+      background: linear-gradient(transparent, rgba(0,0,0,0.9)) !important;
+      height: 60px !important;
+      padding: 0 15px !important;
+    }
+
+    .video-js .vjs-progress-control .vjs-play-progress {
+      background: var(--gradient-1) !important;
+    }
+
+    /* Video Actions Bar */
+    .video-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .video-actions-left,
+    .video-actions-right {
+      display: flex;
+      gap: 12px;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
       border-radius: 12px;
-      padding: 25px;
-      color: #ccc;
+      border: 1px solid var(--border-color);
+      background: var(--bg-glass);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    .movie-details h3 {
-      color: #fff;
-      margin-bottom: 10px;
+    .action-btn i {
+      font-size: 1.1rem;
     }
 
-    .rating {
-      color: #f5c518;
-      font-size: 1.3rem;
+    .action-btn:hover {
+      background: var(--bg-card);
+      border-color: var(--primary);
+      transform: translateY(-2px);
     }
 
-    .movie-meta {
-      font-size: 0.95rem;
-      color: #aaa;
+    .action-btn.primary {
+      background: var(--gradient-1);
+      border: none;
+    }
+
+    .action-btn.primary:hover {
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+    }
+
+    .action-btn.liked {
+      color: #ef4444;
+      border-color: #ef4444;
+    }
+
+    .action-btn.liked i {
+      animation: heartbeat 0.3s ease;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* Movie Details Card */
+    .movie-details {
+      max-width: 1200px;
+      margin: 0 auto 40px auto;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 35px;
+      border: 1px solid var(--border-color);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+
+    .movie-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .movie-title-section h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .movie-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
       margin-bottom: 15px;
     }
 
-    .movie-description {
-      line-height: 1.5;
-      color: #ddd;
+    .badge-item {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
+    .badge-rating {
+      background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+      color: #000;
+    }
+
+    .badge-year {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    .badge-duration {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    .badge-hd {
+      background: var(--gradient-1);
+      color: white;
+    }
+
+    .rating-display {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .rating-score {
+      font-size: 3rem;
+      font-weight: 800;
+      background: var(--gradient-2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .rating-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rating-stars {
+      color: var(--accent);
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+    }
+
+    .rating-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .movie-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px 0;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .meta-value {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .movie-description {
+      line-height: 1.8;
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    .movie-genres {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .genre-tag {
+      padding: 8px 16px;
+      border-radius: 25px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .genre-tag:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Cast Section */
+    .cast-section {
+      max-width: 1200px;
+      margin: 0 auto 40px auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 28px;
+      background: var(--gradient-1);
+      border-radius: 4px;
+    }
+
+    .see-all-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .see-all-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .cast-grid {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 15px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .cast-card {
+      flex: 0 0 auto;
+      width: 120px;
+      text-align: center;
+      scroll-snap-align: start;
+    }
+
+    .cast-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--gradient-1);
+      margin: 0 auto 12px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+      border: 3px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .cast-card:hover .cast-avatar {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+    }
+
+    .cast-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .cast-role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* More Like This */
     .more-like-this {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto 50px auto;
     }
 
     .recommendation-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 20px;
-      margin-top: 15px;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 25px;
+      margin-top: 25px;
     }
 
     .recommendation-card {
-      background: #111;
-      border-radius: 10px;
+      position: relative;
+      border-radius: 16px;
       overflow: hidden;
-      transition: transform 0.3s ease;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
+      group: true;
+    }
+
+    .recommendation-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-1);
+      opacity: 0;
+      z-index: 1;
+      transition: opacity 0.3s ease;
     }
 
     .recommendation-card:hover {
-      transform: scale(1.05);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 40px rgba(139, 92, 246, 0.2);
+      border-color: var(--primary);
+    }
+
+    .recommendation-card:hover::before {
+      opacity: 0.1;
+    }
+
+    .card-image-wrapper {
+      position: relative;
+      overflow: hidden;
     }
 
     .recommendation-card img {
       width: 100%;
-      height: 220px;
+      height: 260px;
       object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .recommendation-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+    }
+
+    .recommendation-card:hover .card-overlay {
+      opacity: 1;
+    }
+
+    .play-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--gradient-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      transform: scale(0);
+      transition: transform 0.3s ease;
+    }
+
+    .recommendation-card:hover .play-icon {
+      transform: scale(1);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--gradient-2);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      z-index: 3;
+    }
+
+    .card-content {
+      padding: 18px;
+      position: relative;
+      z-index: 2;
     }
 
     .card-title {
-      padding: 10px;
-      font-size: 0.95rem;
-      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    /* 🎯 Comments Section Styling */
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .card-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--accent);
+    }
+
+    /* Comments Section */
     .comment-section {
-      max-width: 1000px;
-      margin: 0 auto 70px auto;
-      background: #181818;
-      padding: 20px;
-      border-radius: 10px;
+      max-width: 1200px;
+      margin: 0 auto 80px auto;
+    }
+
+    .comment-box {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 30px;
+    }
+
+    .comment-input-wrapper {
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+    }
+
+    .comment-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--gradient-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .comment-form {
+      flex: 1;
     }
 
     .comment-form .form-control {
-      background-color: #222;
-      color: #fff;
-      border: 1px solid #444;
-      border-radius: 8px;
+      background: var(--bg-glass);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
     }
 
     .comment-form .form-control:focus {
-      border-color: #f5c518;
-      box-shadow: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+      outline: none;
     }
 
-    .comment {
-      background-color: #111;
-      padding: 15px;
-      border-radius: 8px;
+    .comment-form .form-control::placeholder {
+      color: var(--text-muted);
+    }
+
+    .comment-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-top: 15px;
     }
 
-    .comment strong {
-      color: #f5c518;
+    .comment-tools {
+      display: flex;
+      gap: 10px;
     }
 
-    .timestamp {
+    .tool-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tool-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .submit-btn {
+      padding: 12px 30px;
+      border-radius: 12px;
+      background: var(--gradient-1);
+      border: none;
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+    }
+
+    .comments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .comment {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 25px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .comment:hover {
+      border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    .comment-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .commenter-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: var(--gradient-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+    }
+
+    .commenter-info {
+      flex: 1;
+    }
+
+    .commenter-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .verified-badge {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: white;
+    }
+
+    .comment-time {
       font-size: 0.8rem;
-      color: #999;
+      color: var(--text-muted);
+    }
+
+    .comment-text {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+
+    .comment-footer {
+      display: flex;
+      gap: 20px;
+    }
+
+    .comment-action {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+
+    .comment-action:hover {
+      color: var(--primary);
+      background: rgba(139, 92, 246, 0.1);
+    }
+
+    .comment-action.liked {
+      color: #ef4444;
+    }
+
+    /* Empty State */
+    .empty-comments {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-comments i {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      opacity: 0.3;
+    }
+
+    .empty-comments h4 {
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    /* Loading Animation */
+    .loading-shimmer {
+      background: linear-gradient(90deg, 
+        var(--bg-glass) 25%, 
+        rgba(255,255,255,0.1) 50%, 
+        var(--bg-glass) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .movie-title-section h1 {
+        font-size: 1.6rem;
+      }
+
+      .movie-details {
+        padding: 25px;
+      }
+
+      .video-actions {
+        flex-direction: column;
+      }
+
+      .video-actions-left,
+      .video-actions-right {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .action-btn {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .recommendation-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+      }
+
+      .recommendation-card img {
+        height: 200px;
+      }
+
+      .comment-input-wrapper {
+        flex-direction: column;
+      }
+
+      .comment-avatar {
+        display: none;
+      }
+    }
+
+    /* Notification Toast */
+    .toast-notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 16px 24px;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 10000;
+    }
+
+    .toast-notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-notification.success {
+      border-color: #22c55e;
+    }
+
+    .toast-notification.success i {
+      color: #22c55e;
     }
   
-  </style>
+    /* Standardized Sidebar (match index.php) */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 80px;
+      background: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+      padding: 20px 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      overflow-x: hidden;
+    }
+
+    .sidebar:hover {
+      width: 260px;
+      box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar .logo {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 10px;
+    }
+
+    .sidebar .logo img {
+      width: 45px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+    }
+
+    .sidebar:hover .logo img {
+      width: 100px;
+    }
+
+    .sidebar .nav-links {
+      list-style: none;
+      padding: 0 12px;
+    }
+
+    .sidebar .nav-links li {
+      margin: 8px 0;
+    }
+
+    .sidebar .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      color: var(--text-secondary, #a1a1aa);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar .nav-links a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-1, linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .sidebar .nav-links a:hover::before {
+      opacity: 1;
+    }
+
+    .sidebar .nav-links a:hover {
+      color: #fff;
+      transform: translateX(5px);
+    }
+
+    .sidebar .nav-links a i {
+      font-size: 1.3rem;
+      min-width: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar .nav-links a:hover i {
+      transform: scale(1.1);
+    }
+
+    .sidebar .nav-links a span {
+      opacity: 0;
+      white-space: nowrap;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar:hover .nav-links a span {
+      opacity: 1;
+    }
+
+    .sidebar .nav-links a.active {
+      background: var(--gradient-1, linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%));
+      color: #fff;
+    }
+
+    .main-content,
+    .content {
+      margin-left: 80px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 60px;
+      }
+
+      .sidebar:hover {
+        width: 200px;
+      }
+
+      .main-content,
+      .content {
+        margin-left: 60px;
+      }
+    }\n  </style>
 </head>
 <body>
 
-<!-- ≡ Sidebar -->
+<!-- Sidebar -->
 <nav class="sidebar">
   <div class="logo">
-    <a href="login.html">
-      <img src="Geometric Blue _A_ Logo Design.png" alt="Aura Logo" />
+    <a href="login.php">
+      <img src="Geometric Blue _A_ Logo Design.png" alt="Logo">
     </a>
   </div>
   <ul class="nav-links">
-    <li><a href="index.php"><i class="bi bi-house-door"></i><span>Home</span></a></li>
-    <li><a href="search.html"><i class="bi bi-search"></i><span>Search</span></a></li>
-    <li><a href="contact.html"><i class="bi bi-telephone"></i><span>Contact</span></a></li>
-    <li><a href="login.php"><i class="bi bi-person"></i><span>Login</span></a></li>
+    <li><a href="index.php" class="active"><i class="bi bi-house-door-fill"></i> <span>Home</span></a></li>
+    <li><a href="search.html"><i class="bi bi-search"></i> <span>Discover</span></a></li>
+    <li><a href="contact.html"><i class="bi bi-headset"></i> <span>Support</span></a></li>
+    <li><a href="login.php"><i class="bi bi-person-circle"></i> <span>Account</span></a></li>
   </ul>
 </nav>
 
-<!-- ≡ Content -->
+<!-- Content -->
 <div class="content">
-  <h3 class="text-center mb-4">Now Playing: Fight Club</h3>
+  <!-- Page Header -->
+  <div class="page-header">
+    <button class="back-btn" onclick="history.back()">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+    <div class="page-title">Now Playing: <span id="nowPlayingTitle">Fight Club</span></div>
+  </div>
 
   <!-- Video Player -->
-  <div class="video-container mb-5">
-    <video
-      id="my-video"
-      class="video-js vjs-theme-city vjs-big-play-centered"
-      controls
-      preload="auto"
-      poster="fightclub.jpg"
-      data-setup='{"playbackRates": [0.5, 1, 1.5, 2], "fluid": true}'
-    >
-      <source src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4" type="video/mp4" />
-    </video>
+  <div class="video-wrapper">
+    <div class="video-container">
+      <video
+        id="my-video"
+        class="video-js vjs-big-play-centered"
+        controls
+        preload="auto"
+        poster="Thumbnails/fightclub.jpg"
+        data-setup='{"playbackRates": [0.5, 1, 1.5, 2], "fluid": true}'
+      >
+        <source src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <!-- Video Actions -->
+    <div class="video-actions">
+      <div class="video-actions-left">
+        <button class="action-btn primary" onclick="toggleLike(this)">
+          <i class="bi bi-heart"></i>
+          <span>Like</span>
+        </button>
+        <button class="action-btn" onclick="addToList()">
+          <i class="bi bi-plus-lg"></i>
+          <span>My List</span>
+        </button>
+        <button class="action-btn">
+          <i class="bi bi-download"></i>
+          <span>Download</span>
+        </button>
+      </div>
+      <div class="video-actions-right">
+        <button class="action-btn" onclick="shareMovie()">
+          <i class="bi bi-share"></i>
+          <span>Share</span>
+        </button>
+        <button class="action-btn">
+          <i class="bi bi-three-dots"></i>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Movie Details -->
   <div class="movie-details">
-    <h3>Fight Club</h3>
-    <div class="rating">★★★★★ (4.8/5)</div>
-    <div class="movie-meta">Genre: Drama, Thriller | Year: 1999 | Duration: 2h 19min</div>
-    <p class="movie-description">
-      An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into something much more. A dark, gripping tale that explores consumerism, identity, and rebellion.
+    <div class="movie-header">
+      <div class="movie-title-section">
+        <h1 id="movieTitle">Fight Club</h1>
+        <div class="movie-badges">
+          <span id="badgeRating" class="badge-item badge-rating"><i class="bi bi-star-fill"></i> 8.8</span>
+          <span class="badge-item badge-hd">4K UHD</span>
+          <span id="badgeYear" class="badge-item badge-year">1999</span>
+          <span id="badgeDuration" class="badge-item badge-duration"><i class="bi bi-clock"></i> 2h 19m</span>
+        </div>
+      </div>
+      <div class="rating-display">
+        <div id="ratingScore" class="rating-score">4.8</div>
+        <div class="rating-details">
+          <div class="rating-stars">★★★★★</div>
+          <div id="ratingCount" class="rating-count">Based on 2.4M reviews</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="movie-meta">
+      <div class="meta-item">
+        <span class="meta-label">Director</span>
+        <span class="meta-value">David Fincher</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Writers</span>
+        <span class="meta-value">Chuck Palahniuk, Jim Uhls</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Studio</span>
+        <span class="meta-value">20th Century Fox</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Language</span>
+        <span class="meta-value">English</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Rating</span>
+        <span class="meta-value">R (Mature)</span>
+      </div>
+    </div>
+
+    <p id="movieDescription" class="movie-description">
+      An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into something much more. A dark, gripping tale that explores consumerism, identity, and rebellion. The film has become a cult classic, celebrated for its twist ending and commentary on modern masculinity and consumer culture.
     </p>
+
+    <div id="movieGenres" class="movie-genres">
+      <span class="genre-tag">Drama</span>
+      <span class="genre-tag">Thriller</span>
+      <span class="genre-tag">Mystery</span>
+      <span class="genre-tag">Psychological</span>
+      <span class="genre-tag">Cult Classic</span>
+    </div>
+  </div>
+
+  <!-- Cast Section -->
+  <div class="cast-section">
+    <div class="section-header">
+      <h2 class="section-title">Top Cast</h2>
+      <button class="see-all-btn">See All <i class="bi bi-chevron-right"></i></button>
+    </div>
+    <div class="cast-grid">
+      <div class="cast-card">
+        <div class="cast-avatar">BP</div>
+        <div class="cast-name">Brad Pitt</div>
+        <div class="cast-role">Tyler Durden</div>
+      </div>
+      <div class="cast-card">
+        <div class="cast-avatar">EN</div>
+        <div class="cast-name">Edward Norton</div>
+        <div class="cast-role">The Narrator</div>
+      </div>
+      <div class="cast-card">
+        <div class="cast-avatar">HB</div>
+        <div class="cast-name">Helena Bonham</div>
+        <div class="cast-role">Marla Singer</div>
+      </div>
+      <div class="cast-card">
+        <div class="cast-avatar">ML</div>
+        <div class="cast-name">Meat Loaf</div>
+        <div class="cast-role">Robert Paulson</div>
+      </div>
+      <div class="cast-card">
+        <div class="cast-avatar">JL</div>
+        <div class="cast-name">Jared Leto</div>
+        <div class="cast-role">Angel Face</div>
+      </div>
+    </div>
   </div>
 
   <!-- More Like This -->
   <div class="more-like-this">
-    <h4 style="color: #fff;">More Like This</h4>
+    <div class="section-header">
+      <h2 class="section-title">More Like This</h2>
+      <button class="see-all-btn">View All <i class="bi bi-chevron-right"></i></button>
+    </div>
     <div class="recommendation-grid">
-      <a href="player.html">
+      <a href="player.html?title=Breaking%20Bad">
         <div class="recommendation-card">
-          <img src="breaking.jpg" alt="breaking bad" />
-          <div class="card-title">Breaking bad</div>
+          <div class="card-image-wrapper">
+            <span class="card-badge">Trending</span>
+            <img src="Thumbnails/breaking.jpg" alt="Breaking Bad" />
+            <div class="card-overlay">
+              <div class="play-icon">
+                <i class="bi bi-play-fill"></i>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="card-title">Breaking Bad</div>
+            <div class="card-meta">
+              <span class="card-rating"><i class="bi bi-star-fill"></i> 9.5</span>
+              <span>2008</span>
+              <span>TV Series</span>
+            </div>
+          </div>
         </div>
       </a>
-      <a href="player.html">
+      <a href="player.html?title=American%20Psycho">
         <div class="recommendation-card">
-          <img src="psycho.jpg" alt="american psycho" />
-          <div class="card-title">American Psycho</div>
+          <div class="card-image-wrapper">
+            <span class="card-badge">Popular</span>
+            <img src="Thumbnails/psycho.jpg" alt="American Psycho" />
+            <div class="card-overlay">
+              <div class="play-icon">
+                <i class="bi bi-play-fill"></i>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="card-title">American Psycho</div>
+            <div class="card-meta">
+              <span class="card-rating"><i class="bi bi-star-fill"></i> 7.6</span>
+              <span>2000</span>
+              <span>Movie</span>
+            </div>
+          </div>
         </div>
       </a>
-      <a href="player.html">
+      <a href="player.html?title=Inception">
         <div class="recommendation-card">
-          <img src="inception.jpg" alt="inception" />
-          <div class="card-title">Inception</div>
+          <div class="card-image-wrapper">
+            <span class="card-badge">Must Watch</span>
+            <img src="Thumbnails/inception.jpg" alt="Inception" />
+            <div class="card-overlay">
+              <div class="play-icon">
+                <i class="bi bi-play-fill"></i>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="card-title">Inception</div>
+            <div class="card-meta">
+              <span class="card-rating"><i class="bi bi-star-fill"></i> 8.8</span>
+              <span>2010</span>
+              <span>Movie</span>
+            </div>
+          </div>
         </div>
       </a>
-      <a href="player.html">
+      <a href="player.html?title=I%20Saw%20the%20Devil">
         <div class="recommendation-card">
-          <img src="isaw.jpg" alt="i saw the devil" />
-          <div class="card-title">I Saw the Devil</div>
+          <div class="card-image-wrapper">
+            <img src="Thumbnails/isaw.jpg" alt="I Saw the Devil" />
+            <div class="card-overlay">
+              <div class="play-icon">
+                <i class="bi bi-play-fill"></i>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="card-title">I Saw the Devil</div>
+            <div class="card-meta">
+              <span class="card-rating"><i class="bi bi-star-fill"></i> 7.8</span>
+              <span>2010</span>
+              <span>Movie</span>
+            </div>
+          </div>
         </div>
       </a>
     </div>
   </div>
 
   <!-- Comments Section -->
-  <div class="comment-section mt-5">
-    <h4 class="mb-3">Viewer Comments</h4>
-    <div class="comment-form mb-4">
-      <input type="text" class="form-control mb-2" id="commentName" placeholder="Your Name">
-      <textarea class="form-control mb-2" id="commentText" rows="3" placeholder="Write a comment..."></textarea>
-      <button class="btn btn-danger" onclick="addComment()">Post Comment</button>
+  <div class="comment-section">
+    <div class="section-header">
+      <h2 class="section-title">Comments</h2>
     </div>
 
-    <div id="commentsList"></div>
-  </div>
+    <div class="comment-box">
+      <div class="comment-input-wrapper">
+        <div class="comment-avatar">
+          <i class="bi bi-person"></i>
+        </div>
+        <div class="comment-form">
+          <input type="text" class="form-control mb-3" id="commentName" placeholder="Your name...">
+          <textarea class="form-control" id="commentText" rows="3" placeholder="Share your thoughts about this movie..."></textarea>
+          <div class="comment-actions">
+            <div class="comment-tools">
+              <button class="tool-btn"><i class="bi bi-emoji-smile"></i></button>
+              <button class="tool-btn"><i class="bi bi-image"></i></button>
+              <button class="tool-btn"><i class="bi bi-gift"></i></button>
+            </div>
+            <button class="submit-btn" onclick="addComment()">
+              <i class="bi bi-send-fill"></i>
+              Post Comment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div id="commentsList" class="comments-list">
+      <!-- Comments will be loaded here -->
+    </div>
+
+    <div id="emptyState" class="empty-comments" style="display: none;">
+      <i class="bi bi-chat-square-text"></i>
+      <h4>No comments yet</h4>
+      <p>Be the first to share your thoughts!</p>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast-notification">
+  <i class="bi bi-check-circle-fill"></i>
+  <span id="toastMessage">Action completed!</span>
 </div>
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
-<!-- Comments Logic -->
 <script>
+  const movieData = {
+    "fight club": {
+      title: "Fight Club",
+      poster: "Thumbnails/fightclub.jpg",
+      badgeRating: "8.8",
+      ratingScore: "4.8",
+      ratingCount: "Based on 2.4M reviews",
+      year: "1999",
+      duration: "2h 19m",
+      description:
+        "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into something much more. A dark, gripping tale that explores consumerism, identity, and rebellion. The film has become a cult classic, celebrated for its twist ending and commentary on modern masculinity and consumer culture.",
+      genres: ["Drama", "Thriller", "Mystery", "Psychological", "Cult Classic"]
+    },
+    "the dark knight": {
+      title: "The Dark Knight",
+      poster: "Thumbnails/dark knight.jpg",
+      badgeRating: "9.0",
+      ratingScore: "4.8",
+      ratingCount: "Based on 3.1M reviews",
+      year: "2008",
+      duration: "2h 32m",
+      description:
+        "Batman faces the Joker, a criminal mastermind who plunges Gotham into chaos. A gripping superhero crime thriller with iconic performances and a dark tone.",
+      genres: ["Action", "Crime", "Thriller"]
+    },
+    "final destination": {
+      title: "Final Destination",
+      poster: "Thumbnails/final.jpg",
+      badgeRating: "7.2",
+      ratingScore: "4.2",
+      ratingCount: "Based on 580K reviews",
+      year: "2000",
+      duration: "1h 38m",
+      description:
+        "A group of teens cheat death after a premonition, only to be stalked by fate in terrifying, unpredictable ways.",
+      genres: ["Horror", "Thriller", "Mystery"]
+    },
+    "breaking bad": {
+      title: "Breaking Bad",
+      poster: "Thumbnails/breaking.jpg",
+      badgeRating: "9.5",
+      ratingScore: "4.8",
+      ratingCount: "Based on 2.1M reviews",
+      year: "2008",
+      duration: "5 Seasons",
+      description:
+        "A chemistry teacher turned meth kingpin navigates crime, morality, and family as his choices spiral out of control.",
+      genres: ["Crime", "Drama", "Thriller"]
+    },
+    "oldboy": {
+      title: "Oldboy",
+      poster: "Thumbnails/oldboy.png",
+      badgeRating: "8.4",
+      ratingScore: "4.4",
+      ratingCount: "Based on 760K reviews",
+      year: "2003",
+      duration: "2h 0m",
+      description:
+        "After being mysteriously imprisoned for 15 years, a man seeks vengeance in a twist-filled psychological thriller.",
+      genres: ["Thriller", "Mystery", "Drama"]
+    },
+    "i saw the devil": {
+      title: "I Saw the Devil",
+      poster: "Thumbnails/isaw.jpg",
+      badgeRating: "7.8",
+      ratingScore: "4.5",
+      ratingCount: "Based on 420K reviews",
+      year: "2010",
+      duration: "2h 21m",
+      description:
+        "A secret agent hunts a serial killer in a brutal cat-and-mouse revenge thriller.",
+      genres: ["Thriller", "Action", "Crime"]
+    },
+    "the lord of the rings": {
+      title: "The Lord Of The Rings",
+      poster: "Thumbnails/lord of rings.jpg",
+      badgeRating: "8.9",
+      ratingScore: "5.0",
+      ratingCount: "Based on 2.3M reviews",
+      year: "2001",
+      duration: "3h 21m",
+      description:
+        "A hobbit embarks on a perilous journey to destroy a powerful ring and save Middle-earth.",
+      genres: ["Adventure", "Fantasy", "Epic"]
+    },
+    "inception": {
+      title: "Inception",
+      poster: "Thumbnails/inception.jpg",
+      badgeRating: "8.8",
+      ratingScore: "4.8",
+      ratingCount: "Based on 2.5M reviews",
+      year: "2010",
+      duration: "2h 28m",
+      description:
+        "A skilled thief enters dreams to plant ideas, but a final mission blurs reality and illusion.",
+      genres: ["Sci-Fi", "Thriller", "Action"]
+    },
+    "shawshank redemption": {
+      title: "The Shawshank Redemption",
+      poster: "Thumbnails/shawshank.jpg",
+      badgeRating: "9.3",
+      ratingScore: "4.9",
+      ratingCount: "Based on 2.9M reviews",
+      year: "1994",
+      duration: "2h 22m",
+      description:
+        "Two imprisoned men bond over years, finding solace and eventual redemption through acts of decency.",
+      genres: ["Drama", "Crime"]
+    },
+    "the godfather": {
+      title: "The Godfather",
+      poster: "Thumbnails/the godfather.png",
+      badgeRating: "9.2",
+      ratingScore: "4.8",
+      ratingCount: "Based on 2.1M reviews",
+      year: "1972",
+      duration: "2h 55m",
+      description:
+        "The aging patriarch of an organized crime dynasty transfers control to his reluctant son.",
+      genres: ["Crime", "Drama", "Classic"]
+    },
+    "whiplash": {
+      title: "Whiplash",
+      poster: "Thumbnails/whiplash.jpg",
+      badgeRating: "8.5",
+      ratingScore: "4.5",
+      ratingCount: "Based on 1.3M reviews",
+      year: "2014",
+      duration: "1h 45m",
+      description:
+        "A young drummer endures ruthless mentorship to achieve greatness at an elite music conservatory.",
+      genres: ["Drama", "Music"]
+    },
+    "se7en": {
+      title: "Se7en",
+      poster: "Thumbnails/seven.jpg",
+      badgeRating: "8.6",
+      ratingScore: "4.4",
+      ratingCount: "Based on 1.9M reviews",
+      year: "1995",
+      duration: "2h 7m",
+      description:
+        "Two detectives hunt a serial killer who uses the seven deadly sins as his motives.",
+      genres: ["Thriller", "Crime", "Mystery"]
+    },
+    "eternal sunshine": {
+      title: "Eternal Sunshine of the Spotless Mind",
+      poster: "Thumbnails/eternal.jfif",
+      badgeRating: "8.3",
+      ratingScore: "4.7",
+      ratingCount: "Based on 1.2M reviews",
+      year: "2004",
+      duration: "1h 48m",
+      description:
+        "After a painful breakup, a couple undergoes a procedure to erase each other from their memories.",
+      genres: ["Romance", "Drama", "Sci-Fi"]
+    },
+    "rom-com picks": {
+      title: "Rom-Com Picks",
+      poster: "Thumbnails/romcom.webp",
+      badgeRating: "7.9",
+      ratingScore: "4.0",
+      ratingCount: "Based on 210K reviews",
+      year: "2020",
+      duration: "1h 50m",
+      description:
+        "A feel-good collection of modern romantic comedies with heart and humor.",
+      genres: ["Rom-Com", "Comedy", "Romance"]
+    },
+    "stranger things": {
+      title: "Stranger Things",
+      poster: "Thumbnails/sci-fi.jpg",
+      badgeRating: "8.7",
+      ratingScore: "4.6",
+      ratingCount: "Based on 3.6M reviews",
+      year: "2016",
+      duration: "4 Seasons",
+      description:
+        "A group of kids uncover supernatural mysteries in their small town after a boy disappears.",
+      genres: ["Sci-Fi", "Horror", "Mystery"]
+    },
+    "you": {
+      title: "You",
+      poster: "Thumbnails/you.jpg",
+      badgeRating: "7.7",
+      ratingScore: "4.1",
+      ratingCount: "Based on 1.1M reviews",
+      year: "2018",
+      duration: "4 Seasons",
+      description:
+        "A charming but obsessive man goes to extreme lengths for the people he loves.",
+      genres: ["Thriller", "Drama", "Psychological"]
+    },
+    "dexter": {
+      title: "Dexter",
+      poster: "Thumbnails/dexter.jpg",
+      badgeRating: "8.6",
+      ratingScore: "4.3",
+      ratingCount: "Based on 1.8M reviews",
+      year: "2006",
+      duration: "8 Seasons",
+      description:
+        "A forensic analyst leads a secret life as a vigilante serial killer.",
+      genres: ["Crime", "Drama", "Thriller"]
+    },
+    "memory": {
+      title: "Memory",
+      poster: "Thumbnails/memory.jpg",
+      badgeRating: "7.3",
+      ratingScore: "4.1",
+      ratingCount: "Based on 310K reviews",
+      year: "2022",
+      duration: "1h 53m",
+      description:
+        "A contract killer struggles with memory loss while completing his final mission.",
+      genres: ["Action", "Thriller"]
+    },
+    "anayam": {
+      title: "Anayam",
+      poster: "Thumbnails/anayam.jpg",
+      badgeRating: "7.0",
+      ratingScore: "4.0",
+      ratingCount: "Based on 120K reviews",
+      year: "2024",
+      duration: "2h 10m",
+      description:
+        "A tense psychological thriller that explores guilt, identity, and redemption.",
+      genres: ["Thriller", "Psychological"]
+    },
+    "american psycho": {
+      title: "American Psycho",
+      poster: "Thumbnails/psycho.jpg",
+      badgeRating: "7.6",
+      ratingScore: "4.3",
+      ratingCount: "Based on 980K reviews",
+      year: "2000",
+      duration: "1h 42m",
+      description:
+        "A wealthy New York investment banker leads a double life as a serial killer.",
+      genres: ["Crime", "Drama", "Psychological"]
+    },
+    "the shawshank redemption": {
+      title: "The Shawshank Redemption",
+      poster: "Thumbnails/shawshank.jpg",
+      badgeRating: "9.3",
+      ratingScore: "4.9",
+      ratingCount: "Based on 2.9M reviews",
+      year: "1994",
+      duration: "2h 22m",
+      description:
+        "Two imprisoned men bond over years, finding solace and eventual redemption through acts of decency.",
+      genres: ["Drama", "Crime"]
+    },
+    "memories of murder": {
+      title: "Memories of Murder",
+      poster: "Thumbnails/memory.jpg",
+      badgeRating: "8.1",
+      ratingScore: "4.6",
+      ratingCount: "Based on 640K reviews",
+      year: "2003",
+      duration: "2h 12m",
+      description:
+        "Detectives chase a serial killer in a haunting true‑crime thriller set in rural Korea.",
+      genres: ["Thriller", "Crime", "Mystery"]
+    },
+    "anayam rasoolam": {
+      title: "Anayam Rasoolam",
+      poster: "Thumbnails/anayam.jpg",
+      badgeRating: "7.5",
+      ratingScore: "4.0",
+      ratingCount: "Based on 210K reviews",
+      year: "2013",
+      duration: "2h 15m",
+      description:
+        "A touching romantic journey through the streets of Kochi with love, loss, and longing.",
+      genres: ["Romance", "Drama"]
+    },
+    "game of thrones": {
+      title: "Game Of Thrones",
+      poster: "Thumbnails/got.jpg",
+      badgeRating: "9.2",
+      ratingScore: "4.9",
+      ratingCount: "Based on 4.5M reviews",
+      year: "2011",
+      duration: "8 Seasons",
+      description:
+        "Noble families vie for control of the Iron Throne in a sweeping fantasy epic.",
+      genres: ["Fantasy", "Drama", "Adventure"]
+    },
+    "sopranos": {
+      title: "Sopranos",
+      poster: "Thumbnails/sopranos.jpg",
+      badgeRating: "9.2",
+      ratingScore: "4.6",
+      ratingCount: "Based on 1.3M reviews",
+      year: "1999",
+      duration: "6 Seasons",
+      description:
+        "A New Jersey mob boss balances crime, family, and therapy in a landmark series.",
+      genres: ["Crime", "Drama"]
+    },
+    "500 days of summer": {
+      title: "500 Days of Summer",
+      poster: "Thumbnails/500days.jpg",
+      badgeRating: "7.7",
+      ratingScore: "3.9",
+      ratingCount: "Based on 1.4M reviews",
+      year: "2009",
+      duration: "1h 35m",
+      description:
+        "A nonlinear story of a boy, a girl, and the end of a relationship.",
+      genres: ["Romance", "Comedy", "Drama"]
+    },
+    "eternal sunshine of the spotless mind": {
+      title: "Eternal Sunshine of the Spotless Mind",
+      poster: "Thumbnails/eternal.jfif",
+      badgeRating: "8.3",
+      ratingScore: "4.7",
+      ratingCount: "Based on 1.2M reviews",
+      year: "2004",
+      duration: "1h 48m",
+      description:
+        "After a painful breakup, a couple undergoes a procedure to erase each other from their memories.",
+      genres: ["Romance", "Drama", "Sci-Fi"]
+    }
+  };
+
+  function normalizeTitle(value) {
+    return (value || "").trim().toLowerCase();
+  }
+
+  function setMovieDetails(movie) {
+    const video = document.getElementById("my-video");
+    const nowPlaying = document.getElementById("nowPlayingTitle");
+    const title = document.getElementById("movieTitle");
+    const badgeRating = document.getElementById("badgeRating");
+    const badgeYear = document.getElementById("badgeYear");
+    const badgeDuration = document.getElementById("badgeDuration");
+    const ratingScore = document.getElementById("ratingScore");
+    const ratingCount = document.getElementById("ratingCount");
+    const description = document.getElementById("movieDescription");
+    const genres = document.getElementById("movieGenres");
+
+    document.title = `${movie.title} - Aura.stream`;
+    nowPlaying.textContent = movie.title;
+    title.textContent = movie.title;
+    badgeRating.innerHTML = `<i class="bi bi-star-fill"></i> ${movie.badgeRating}`;
+    badgeYear.textContent = movie.year;
+    badgeDuration.innerHTML = `<i class="bi bi-clock"></i> ${movie.duration}`;
+    ratingScore.textContent = movie.ratingScore;
+    ratingCount.textContent = movie.ratingCount;
+    description.textContent = movie.description;
+    genres.innerHTML = movie.genres.map(g => `<span class="genre-tag">${g}</span>`).join("");
+    if (video) {
+      video.setAttribute("poster", movie.poster);
+    }
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const titleParam = normalizeTitle(params.get("title"));
+  const currentMovie = movieData[titleParam] || movieData["fight club"];
+  setMovieDetails(currentMovie);
+
+  // Show toast notification
+  function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    toastMessage.textContent = message;
+    toast.className = 'toast-notification ' + type;
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  }
+
+  // Toggle like button
+  function toggleLike(btn) {
+    btn.classList.toggle('liked');
+    const icon = btn.querySelector('i');
+    const span = btn.querySelector('span');
+    
+    if (btn.classList.contains('liked')) {
+      icon.className = 'bi bi-heart-fill';
+      span.textContent = 'Liked';
+      showToast('Added to your favorites!');
+    } else {
+      icon.className = 'bi bi-heart';
+      span.textContent = 'Like';
+      showToast('Removed from favorites');
+    }
+  }
+
+  // Add to list
+  function addToList() {
+    showToast('Added to My List!');
+  }
+
+  // Share movie
+  function shareMovie() {
+    if (navigator.share) {
+      navigator.share({
+        title: `${currentMovie.title} - Aura.stream`,
+        text: 'Check out this amazing movie!',
+        url: window.location.href
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      showToast('Link copied to clipboard!');
+    }
+  }
+
   // Load comments from localStorage
   document.addEventListener("DOMContentLoaded", () => {
-    const stored = localStorage.getItem("comments");
-    if (stored) {
-      JSON.parse(stored).forEach(c => appendComment(c.name, c.text, c.time));
-    }
+    loadComments();
   });
 
+  function loadComments() {
+    const stored = localStorage.getItem("comments");
+    const emptyState = document.getElementById('emptyState');
+    const commentsList = document.getElementById('commentsList');
+    
+    if (stored) {
+      const comments = JSON.parse(stored);
+      if (comments.length > 0) {
+        emptyState.style.display = 'none';
+        comments.forEach(c => appendComment(c.name, c.text, c.time, false));
+      } else {
+        emptyState.style.display = 'block';
+      }
+    } else {
+      emptyState.style.display = 'block';
+    }
+  }
+
   function addComment() {
-    const name = document.getElementById('commentName').value.trim();
-    const text = document.getElementById('commentText').value.trim();
+    const nameInput = document.getElementById('commentName');
+    const textInput = document.getElementById('commentText');
+    const name = nameInput.value.trim();
+    const text = textInput.value.trim();
+
     if (!name || !text) {
-      alert("Please enter both name and comment.");
+      showToast('Please fill in all fields', 'error');
       return;
     }
 
@@ -350,22 +2006,96 @@
     saved.unshift(newComment);
     localStorage.setItem('comments', JSON.stringify(saved));
 
-    appendComment(name, text, time);
-    document.getElementById('commentName').value = "";
-    document.getElementById('commentText').value = "";
+    appendComment(name, text, time, true);
+    nameInput.value = "";
+    textInput.value = "";
+    
+    document.getElementById('emptyState').style.display = 'none';
+    showToast('Comment posted successfully!');
   }
 
-  function appendComment(name, text, time) {
+  function appendComment(name, text, time, animate = true) {
     const commentList = document.getElementById("commentsList");
     const div = document.createElement("div");
     div.className = "comment";
+    
+    if (!animate) {
+      div.style.animation = 'none';
+    }
+
+    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    const colors = ['#8b5cf6', '#06b6d4', '#f59e0b', '#ef4444', '#22c55e', '#ec4899'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
     div.innerHTML = `
-      <strong>${name}</strong>
-      <div class="timestamp">${time}</div>
-      <p>${text}</p>
+      <div class="comment-header">
+        <div class="commenter-avatar" style="background: ${randomColor}">${initials}</div>
+        <div class="commenter-info">
+          <div class="commenter-name">
+            ${name}
+            <span class="verified-badge"><i class="bi bi-check"></i></span>
+          </div>
+          <div class="comment-time">${time}</div>
+        </div>
+      </div>
+      <p class="comment-text">${text}</p>
+      <div class="comment-footer">
+        <span class="comment-action" onclick="toggleCommentLike(this)">
+          <i class="bi bi-heart"></i>
+          <span>0</span>
+        </span>
+        <span class="comment-action">
+          <i class="bi bi-chat"></i>
+          Reply
+        </span>
+        <span class="comment-action">
+          <i class="bi bi-share"></i>
+          Share
+        </span>
+      </div>
     `;
     commentList.prepend(div);
   }
+
+  function toggleCommentLike(el) {
+    el.classList.toggle('liked');
+    const icon = el.querySelector('i');
+    const count = el.querySelector('span');
+    
+    if (el.classList.contains('liked')) {
+      icon.className = 'bi bi-heart-fill';
+      count.textContent = parseInt(count.textContent) + 1;
+    } else {
+      icon.className = 'bi bi-heart';
+      count.textContent = Math.max(0, parseInt(count.textContent) - 1);
+    }
+  }
+
+  // Initialize video player with custom settings
+  document.addEventListener('DOMContentLoaded', function() {
+    const player = videojs('my-video', {
+      controls: true,
+      autoplay: false,
+      preload: 'auto',
+      fluid: true,
+      playbackRates: [0.5, 1, 1.25, 1.5, 2],
+      controlBar: {
+        children: [
+          'playToggle',
+          'volumePanel',
+          'currentTimeDisplay',
+          'timeDivider',
+          'durationDisplay',
+          'progressControl',
+          'playbackRateMenuButton',
+          'pictureInPictureToggle',
+          'fullscreenToggle'
+        ]
+      }
+    });
+  });
 </script>
 </body>
 </html>
+
+
